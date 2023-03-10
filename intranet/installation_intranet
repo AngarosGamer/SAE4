@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Vérifier si l'utilisateur est root
+if [ "$EUID" -ne 0 ]
+  then echo "Ce script doit être utilisé en tant que root pour avoir les permissions nécessaires d'installation"
+  exit
+fi
+
+# Installation d'apache2
+apt update
+apt install -y apache2 curl
+
+# Installation de PHP8
+curl -sSL https://packages.sury.org/php/README.txt | bash -x
+apt update
+
+# Mise en marche de apache
+systemctl start apache2
+systemctl enable apache2
+systemctl status apache2
