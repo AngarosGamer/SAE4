@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Vérifier si l'utilisateur est root
+if [ "$EUID" -ne 0 ]
+  then echo "Ce script doit être utilisé en tant que root pour avoir les permissions nécessaires d'installation"
+  exit
+fi
+
+# Mettre à jour le LDAP / l'installer
+apt update
+apt install libnss-ldap ldap-utils
+
+# Dans la configuration, choisir :
+LDAP server:	ldap://192.168.122.1	(not the default)
+Distinguished name base:	dc=MACHINE	(not the default)
+LDAP version:	3	(the default)
+Make local root Database admin?	No	(not the default)
+Does the LDAP database require login?	No	(the default)
+
+# Mise en place de l'authentification par LDAP
+auth-client-config -t nss -p lac_ldap
+
+# Enthentification par LDAP dans le service PAM
+pam-auth-update
+
+# Reboot pour sauvegarder les changements
+reboot

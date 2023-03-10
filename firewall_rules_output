@@ -1,0 +1,5 @@
+#!/usr/sbin/nft -f
+
+# Paquets sortants d'une connexion par défaut acceptée
+add rule filter output ct state established accept
+add rule filter output drop

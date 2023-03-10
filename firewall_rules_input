@@ -1,0 +1,4 @@
+#!/usr/sbin/nft -f
+
+add rule filter input tcp dport 80 ct state new tcp flags == syn accept
+add rule filter input ct state established accept

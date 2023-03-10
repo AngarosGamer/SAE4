@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Vérifier si l'utilisateur est root
+if [ "$EUID" -ne 0 ]
+  then echo "Ce script doit être utilisé en tant que root pour avoir les permissions nécessaires d'installation"
+  exit
+fi
+
+# Installer le client NFS sur la machine
+apt -y install nfs-common
+
+# Monter le homedir dans le serveur NFS
+mount 192.168.122.1:/home /home
+ls /home
+
+"192.168.122.1:/home   /home   nfs  defaults   0  0" >> /etc/fstab

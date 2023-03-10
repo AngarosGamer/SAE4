@@ -1,0 +1,106 @@
+Charte d'utilisation:
+ - Une pour les administrateurs
+ - Une pour les utilisateurs
+
+Aptitude + Efficacité en temps => Disponibilité
+
+Ticketing / Outil de report
+
+====================================================================================================================================================================
+GROUPE DE MELIAN CHOISI POUR LA SECURITE
+====================================================================================================================================================================
+
+Confidentiel + ointégrité
+Confidentiel pour prevenir acces au ressource non voulu
+
+Pertinence
+Sécurité importante car connectée à internet -> Risques. Types différent : utilisateurs + admins. 
+Risques sur les données donc besoin de sécurité maximal.
+
+Exposition au monde -> infrastructure = DMZ.
+Imposée + libertée d'architecture avec des pare-feu. 1 seul pare-feu.
+
+Accès internet. Bastion SSH à mettre en place.
+Authentification + filtrage -> Tunnel sécurisé qui renforce.
+
+Connecté par un routeur répartit sur DMZ / Réseau interne. Répertorié sur schéma. Limite accès au ressources sensibles = Intégrité confidentielité.
+
+nftable retenu sur pare-feu.
+
+Cacher l'infrastructure avec l'utilisation d'un NAT avant entrée sur internet;
+
+Séparation intra / extra avec admin et personnels.
+Admins avec des droits particuliers pour limiter les dégats possibles. Sauvegarde des données dans le cas d'une attaque.
+
+Dédoublement des services (SSH, SCP), pour pouvoir hotswap les serveurs.
+
+Commutatuer-routeur général sera le seul à réceptionner les dégats si il tombe.
+
+Impacts organisationnel: infrastructure à inclure en documentation (réseaux, IP)
+Mettre en évidence le pare-feu unique.
+
+Tester avec des test de non-intrusion les connexions qui passent et qui passent pas + NAT et pare-feu indiquer les règles en place et les tester.
+
+Mettre en place la sauvegarde. En faire la démo + indiquer les logiciels qui tournent.
+
+Infrastructure hardware : préciser le déploiement du pare-feu en machine dédiée ou en déploiement partagé -> coût + sensibilité des données / processus (confidentialité).
+
+====================================================================================================================================================================
+GROUPE DE TABOADA CHOISI POUR LA DISPONIBILITE
+====================================================================================================================================================================
+
+Services dans l'infrastructure qui doivent êtres actifs et dispo en permancence -> joignables. Moins de config possible / pas du tout pour l'utilisateur. Facile d'accès et automatisé.
+Sous critères: 
+ - Aptitude : Chaque machine accessible rapidement -> DHCP (IP auto), Serveur DNS interne, Résolution DNS aussi. 
+ - Eff. en temps : Scripts d'installation complets pour config. (rendement)
+ - Eff. en ressources : Inventaire d'utilisation de l'infrastructure. Coté technique : surveillance du réseau pour connaitres les ressources. Logs centralisés pour voir les pb. de performance.
+
+====================================================================================================================================================================
+GROUPE DE GUILLAUME CHOISI POUR CAPACITE FONCTIONNELLE
+====================================================================================================================================================================
+
+Satisfaire besoins exprimés ou implicites.
+Tests d'aptitudes 6> services fonctionnent et les gens ont le droit d'y accéder
+
+Aptitude + Efficacité en temps : s'assurer que les qualit"s sont fonctionnelles et répondent aux besoins utilisateurs.
+
+Tests d'aptitude et mesurer l'efficaicté.
+
+Aptitude + qualité d'expérience utulisateurs : crritères traités dans d'autres mais nécessaires : système sécurisé -> services sont déployés et fonctionnels (pare-feu utile et apte à gérer les nuisances); droits des utilisateurs -> fournir les authorizations sur certains programmes et pour les utilisateurs.
+Prendre en compte les besoins utilisateurs : tests d'acceptation des utilisateurs -> réponds aux besoins
+
+Efficacité + perf réseau : capable de supporté les utilisateurs attendu et en performance -> Créer des utilisateurs qui utilisent le système et tester avec ça en utilisant les indicateurs de performance sur les outils de performance mis en place:
+Vérifient la vitesse de transfert, efficaicté, connexions.
+Dév d'applications efficaces avec des processus de stockage des données : optimisation bande passante et traffic des données. 
+Mise en cage des données de l'IUT.
+Optimisation traffic : compression des données pour accéler les communications. Equilibreur de charge pour réduire un point concret = améliorer efficaité. Logiciel de gestion de qualité du service pour faire de la priorisation de contenu.
+
+====================================================================================================================================================================
+GROUPE DE GASPARD CHOISI POUR PERFORMANCE ET EFFICACITE
+====================================================================================================================================================================
+
+Serveurs performants pour la réacitivté et rapidité. Capable de supporter une certaine charge de travail. Contrer les attaques.
+-> Efficacité en temps et en ressources
+
+Tests de charge (logiciels de test). Faire des benchmarks de performance sur le système. Identification des goulots d'étranglement -> tests de charge.
+
+Adaptation avec une allocation des VM. Agrandir l'infrastructure. Priorisation des données et des flux.
+
+Gestion du gaspillage : identifier les services inutiles ou moins gourmands.
+
+====================================================================================================================================================================
+GROUPE DE JEREMY POUR PORTABILITE
+====================================================================================================================================================================
+
+Facilement déployée sur une autre plateforme en restant stable. Fait par automatisation avec scripts et clonage de machines virtuelles. 
+Les mettres sur nouvelle plateforme ou réseau pour voir si tout correspond au réseau initial.
+
+Contrainte technique importante. Infrastructure compatible avec les machines qui vont être installées (OS - Debian 11, 10, 8, Windows, ...) en matière de performance aussi sur l'architecture.
+
+Tests de sécurité qui vont être faits une fois que le nouveau réseau est déployé pour garder le niveau de sec.
+
+Vérifier avec du penetration testing que le niveau de sécurité est haut. Avec documentation complète pour garantir la portabilité à long terme -> maintenabilité.
+
+Logiciel un shellcheck pour vérifier les scripts en termes de syntaxe.
+
+Vérifier clonage des logiciels et paramètrage des VM.
