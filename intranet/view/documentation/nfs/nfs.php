@@ -10,7 +10,7 @@
 </head>
 <body>
 <?php
-include("../navbar.viewpart.php");
+include("../../navbar.viewpart.php");
 ?>
 <div class="main-content">
     <h1>Documentation pour NFS</h1>
@@ -29,10 +29,10 @@ include("../navbar.viewpart.php");
     <p>Il y a deux étapes pour l'installation, une sur le serveur et une sur le client<br>Voici les deux pages pour la documentation appropriée : </p>
     <ul>
         <li>
-            <a href="">Le serveur</a>
+            <a href="nfs-server.php">Le serveur</a>
         </li>
         <li>
-            <a href="">Le client</a>
+            <a href="nfs-client.php">Le client</a>
         </li>
     </ul>
 </div>

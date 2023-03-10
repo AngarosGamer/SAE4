@@ -1,7 +1,7 @@
 nav {
     display: flex;
     justify-content: space-between;
-    background-color: #282c33;
+    background-color: #202428;
     border-bottom: whitesmoke 1px solid;
 }
 
@@ -12,8 +12,12 @@ nav div {
     width: 100%;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
-    color: #BDF139;
     font-size: 1.5em;
+}
+
+nav div a {
+    color: #BDF139;
+    text-decoration: none;
 }
 
 nav ul {

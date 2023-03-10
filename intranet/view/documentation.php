@@ -16,8 +16,8 @@ include(__DIR__ . "/navbar.viewpart.php");
     <h1>Documentation</h1>
     <h2>Table des matières</h2>
     <ul>
-        <li><a>Installation de Zabbix</a></li>
-        <li><a>Installation de NFS</a></li>
+        <li><a href="/view/documentation/zabbix/zabbix.php">Installation de Zabbix</a></li>
+        <li><a href="/view/documentation/nfs/nfs.php">Installation NFS</a></li>
         <ul>
             <li><a>Sur le serveur</a></li>
             <li><a>Sur le client</a></li>
@@ -28,7 +28,7 @@ include(__DIR__ . "/navbar.viewpart.php");
             <li><a>Règles générales de sortie</a></li>
             <li><a>Script de réinitialisation</a></li>
         </ul>
-        
+
     </ul>
 </div>
 </body>
