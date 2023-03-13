@@ -20,4 +20,26 @@ include("../../navbar.viewpart.php");
 
     <h2>Script d'installation</h2>
     <p>Le script <a href="../../../nfs/nfs_install_serveur">nfs_install_serveur</a> peut être téléchargé et utilisé afin de mettre automatiquement le serveur en place <br> Il faudra, en plus de ce script, utiliser le script <a href="">nfs_ajouter_client</a> pour chaque machine voulant être rajouté au systeme</p>
+
+    <h2>Etapes du script</h2>
+    <p>Dans un premier temps, le script vérifie les permissions de l'utilisateur actuel, car il faut être root pour avoir les permissions d'installation</p>
+    <pre>
+        <code class="language-bash">
+            if [ "$EUID" -ne 0 ]
+            then echo "Ce script doit être utilisé en tant que root pour avoir les permissions nécessaires d'installation"
+            exit
+            fi
+        </code>
+    </pre>
+
+    <p>Ensuite, nous installons les packages nécessaires à l'installation du serveur NFS</p>
+    <code class="language-bash">
+        apt -y install nfs-kernel-server
+    </code>
+
+    <p>Puis, il faudra pour chaque machine devant être connectée au serveur de fichier, lancer le script <a href="">nfs_ajouter_client</a> avec comme parametre l'adresse IP de la machine cliente</p>
+    <p>Il contient notamment cette ligne qui accepte la machine d'addresse IP indiqué, le paramètre no_root_squash permettant de retirer le squashing, ce qui permet au client root sur sa machine local de changer n'importe quels fichiers sur le serveur de fichier  </p>
+
+
+
 </div>
