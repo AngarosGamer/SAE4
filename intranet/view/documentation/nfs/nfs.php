@@ -26,7 +26,7 @@ include("../../navbar.viewpart.php");
     </ul>
 
     <h2>Organisation de l'installation</h2>
-    <p>Il y a deux étapes pour l'installation, une sur le serveur et une sur le client<br>Voici les deux pages pour la documentation appropriée : </p>
+    <p>Il y a deux étapes pour l'installation, une sur le serveur qui doit être faite en première et une sur le client<br>Voici les deux pages pour la documentation appropriée : </p>
     <ul>
         <li>
             <a href="nfs-server.php">Le serveur</a>
