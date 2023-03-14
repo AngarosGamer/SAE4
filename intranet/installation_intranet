@@ -14,7 +14,10 @@ apt install -y apache2 curl
 curl -sSL https://packages.sury.org/php/README.txt | bash -x
 apt update
 
+# Mise en place des fichiers de l'intranet dans le répertoire du serveur web
+wget https://github.com/AngarosGamer/SAE4/tree/main/intranet -P /var/www/html/
+
 # Mise en marche de apache
-systemctl start apache2
+systemctl restart apache2
 systemctl enable apache2
 systemctl status apache2

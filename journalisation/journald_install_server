@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Vérifier si l'utilisateur est root
+if [ "$EUID" -ne 0 ]
+  then echo "Ce script doit être utilisé en tant que root pour avoir les permissions nécessaires d'installation"
+  exit
+fi
+
+# Install the remote journald packages
+apt update
+apt upgrade
+apt install systemd-journal-remote
+
+# Mettre en marche le serveur de logs
+systemctl enable --now systemd-journal-remote.socket
+systemctl enable systemd-journal-remote.service
+
+# Ouverture des ports 19532 et 80 sur le pare-feu
