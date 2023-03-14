@@ -8,7 +8,7 @@ fi
 
 # Mettre à jour le LDAP / l'installer
 apt update
-apt install libnss-ldap ldap-utils
+apt -y install libnss-ldap ldap-utils
 
 # Dans la configuration, choisir :
 LDAP server:	ldap://192.168.122.1	(not the default)
