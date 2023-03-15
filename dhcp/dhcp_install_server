@@ -1,0 +1,49 @@
+#!/bin/bash
+#Verifie que le script est lancé en root
+if [[ $EUID -ne 0 ]]; then
+   echo "Ce script doit être lancé en tant que root" 
+   exit 1
+fi
+
+#Mettre à jour la liste des paquets
+apt update
+apt upgrade
+
+#Installe des paquets isc-dhcp-server
+apt install isc-dhcp-server
+
+#Modifier
+sed -i 's/INTERFACESv4=""/INTERFACESv4="eth0"/g' /etc/default/isc-dhcp-server
+
+#Modifier le fichier de configuration
+cat > /etc/dhcp/dhcpd.conf << 'EOL'
+#dhcpd.conf
+default-lease-time 600;
+max-lease-time 7200;
+#option subnet-mask 255.255.255.0;
+option domain-name "cypher.com";
+option domain-name-servers 192.168.128.7;
+
+# Subnet pour les postes de travail
+subnet 192.168.128.0 netmask 255.255.255.0 {
+    range 192.168.128.2 192.168.128.23;
+    option routers 192.168.128.1;
+    option broadcast-address 192.168.128.255;
+};
+
+#Subnet pour la DMZ
+subnet 192.168.1.0 netmask 255.255.255.0 {
+    range 192.168.
+}
+
+#Subnet pour les serveurs
+subnet 192.168.2.0 netmask 255.255.255.0 {
+    range 192.168.
+}
+EOL
+
+#Redemarrer le service
+service udhcpd restart
+
+#Ajouter le script au démarrage
+echo "service udhcpd restart" >> /etc/rc.local
