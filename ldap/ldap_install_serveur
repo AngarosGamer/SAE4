@@ -19,6 +19,8 @@ cd LDAP
 apt-get policy slapd -y
 	#Saisi du mot de passe administrateur nécessaire dans l'interface graphique
 apt -y install slapd
+#Installation du packet sudo-ldap
+apt install sudo-ldap
 
 #Creation d'un utilisateur non privilégié 
 useradd -r -M -d /var/lib/openldap -s /usr/sbin/nologin ldap
@@ -36,7 +38,7 @@ tar xzf openldap-2.6.4.tgz
 
 cd openldap-2.6.4
 
-#Configuratino LDAP :
+#Configuration LDAP :
 ./configure --prefix=/usr --sysconfdir=/etc --disable-static \
 --enable-debug --with-tls=openssl --with-cyrus-sasl \
 --enable-dynamic --enable-crypt --enable-spasswd \
@@ -63,9 +65,23 @@ chmod 640 /etc/openldap/slapd.conf
 
 #Mise à jour du fichier OpenLDAP
 mv /lib/systemd/system/slapd.service{,.old}
+cat > /etc/systemd/system/slapd.service << 'EOL'
+[Unit]
+Description=OpenLDAP Server Daemon
+After=syslog.target network-online.target
+Documentation=man:slapd
+Documentation=man:slapd-mdb
 
-#Installation du packet sudo-ldap
-apt install sudo-ldap
+[Service]
+Type=forking
+PIDFile=/var/lib/openldap/slapd.pid
+Environment="SLAPD_URLS=ldap:/// ldapi:/// ldaps:///"
+Environment="SLAPD_OPTIONS=-F /etc/openldap/slapd.d"
+ExecStart=/usr/libexec/slapd -u ldap -g ldap -h ${SLAPD_URLS} $SLAPD_OPTIONS
+
+[Install]
+WantedBy=multi-user.target
+EOL
 
 #Copie du schema  :
 find /usr/share/doc/ -iname schema.openldap
