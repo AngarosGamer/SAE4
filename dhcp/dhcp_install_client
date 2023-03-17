@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#Lancer ce script en root
+#Si l'utilisateur lancant le script n'est pas root, cela affichera un message d'erreur 
+if [ $(id -u) -ne 0 ]
+then 
+   echo "Ce script doit être lancé en tant que root"
+   exit 1
+fi
+if [ "$#" -ne 1 ]
+then
+   echo "Il faut renseigner l'argument suivant : l'adresse de la machine"
+	echo "Exemple de commande :"
+   echo "./dhcp_install_client client"
+else
+   #Réécriture du fichier de configuration des interfaces réseau
+   cat > /etc/network/interfaces << 'EOL'
+   # This file describes the network interfaces available on your system
+   iface eth0 inet dhcp
+
+
+EOL
+fi
