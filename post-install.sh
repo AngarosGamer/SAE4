@@ -13,7 +13,7 @@ hostnamectl set-hostname "$hostname"
 read -rp 'Utilisateur par défaut: ' username
 
 adduser "$username"
-userdel -r soragnam
+userdel -r setupaccount
 
 echo "Modification du mot de passe root. Choisissez un mot de passe suffisement complexe"
 
