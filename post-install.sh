@@ -10,9 +10,10 @@ read -rp 'Nom de la machine [défaut: cipher]:' hostname
 
 hostnamectl set-hostname "$hostname"
 
-read -srp 'Utilisateur par défaut: ' username
+read -rp 'Utilisateur par défaut: ' username
 
 adduser "$username"
+userdel -r soragnam
 
 echo "Modification du mot de passe root. Choisissez un mot de passe suffisement complexe"
 

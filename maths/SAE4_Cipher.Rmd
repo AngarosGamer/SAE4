@@ -1,0 +1,65 @@
+---
+title: "notions_mathematique_pour_la_sae4"
+output: pdf_document
+date: '2023-03-06'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Préambule
+
+## 1. Les serveurs
+
+Dans le cadre de notre projet informatique, nous allons devoir utiliser 15 machines, donc nous avons choisi de modéliser 15 serveurs sur lesquels vont se réaliser les tâches.
+
+Nos serveurs se divisent en plusieurs opérations différentes:
+ - Deux serveur web
+ - Quatre routeurs
+ - Un serveur de gestion de base de données
+ - Un poste de travail
+ - Un serveur DNS
+ - Un serveur DHCP
+ - Un serveur LDAP
+ - Un serveur d'authentification
+ - Un serveur de logs
+ - Un serveur de surveillance du réseau
+ - Un serveur de fichiers
+ 
+## 2. Les tâches
+
+Nous allons modéliser 15 tâches qui vont tourner sur les différents serveurs.
+
+[... Ajouter les tâches en question? ...]
+
+## 3. Définitions
+
+Posons que nous modélisons notre problème sur une durée de 1 seconde.
+Nous attribuons à nos serveurs une valeur entière, représentant le temps total d'execution possible sur notre durée totale.
+Nous faisons de même pour les tâches, bien que cette fois la réprésentation est faite sur les temps d'execution nécessaire pour terminer la tâche.
+
+## 4. Hypothèses
+
+Pour le début de ce problème, nous nous basons sur un même nombre de serveurs et de tâches afin de nous simplifier le travail de conceptualisation du problème.
+
+ 
+```{python}
+serveur_1 = 97
+serveur_2 = 18
+
+tache_1 = 120
+tache_2 = 90
+
+def calc(serveurs, tache):
+  for serveur in serveurs:
+    minimum = min(minimum, tache/serveur)
+  
+  affectation[serveurs[minimum]] = tache
+  return t/s
+
+
+```
+
+
+
