@@ -7,4 +7,4 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Installer kerberos client et packets additionnels
-apt install -y krb5-workstation krb5-libs krb5-auth-dialog
+apt install -y krb5-workstation krb5-libs krb5-auth-dialog krb5-user

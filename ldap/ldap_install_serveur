@@ -16,10 +16,9 @@ cd LDAP
 
 
 #Installatin des packets slapd nécessaire
-apt-get policy slapd -y
-	#Saisi du mot de passe administrateur nécessaire dans l'interface graphique
+#Saisi du mot de passe administrateur pas nécessaire dans l'interface graphique puis selectionner "OK" pour les service qui ont besoin de redemarrer à chaque fois que la fenetre apparait
 apt -y install slapd
-#Installation du packet sudo-ldap
+#Installation du packet sudo-ldap 
 apt install sudo-ldap
 
 #Creation d'un utilisateur non privilégié 
@@ -54,7 +53,7 @@ apt install libperl-dev
 #Compiler OpenLDAP
 make
 make install
-
+  
 #Creer un repertoire pour la base de données et pour les données LDAP
 mkdir /var/lib/openldap /etc/openldap/slapd.d
 
