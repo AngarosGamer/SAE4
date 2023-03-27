@@ -98,23 +98,85 @@ def marquer_colonnes_avec_zero_barre_sur_ligne_marquee(indexes_barres, lignes_ma
     return colonne_marquees # Return
 
 def marquer_lignes_avec_zero_encadre_sur_colonnes_marquee(indexes_encadres, colonnes_marques, lignes_marquees):
-    for encadre in indexes_encadres:
-        for colonne in colonnes_marques:
-            if encadre[1] == colonne:
-                lignes_marquees.append(encadre[0])
-    return lignes_marquees
+    for encadre in indexes_encadres: # Pour chaque zéro encadré
+        for colonne in colonnes_marques: # Pour chaque colonne marquée
+            if encadre[1] == colonne: # Si un zéro encadré appartient à une colonne marquée
+                lignes_marquees.append(encadre[0]) # On marque la ligne à laquelle appartient le zéro encadré
+    return lignes_marquees # Return 
+
+
+def griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice):
+    lignes = []
+    for ligne in range(len(matrice)):
+        lignes.append(ligne)
+    lignes_grisees = list(set(lignes).difference(lignes_marquees))
+    
+    colonnes_grisee = colonnes_marquees
+    return colonnes_grisee, lignes_grisees
+
+def colonnes_non_grisees(matrice, colonnes_grisees):
+    colonnes = []
+    ccounter = 0
+    for ligne in matrice:
+        for colonne in ligne:
+            colonnes.append(ccounter)
+            ccounter += 1
+    return list(set(colonnes).difference(colonnes_grisees))
+
+def find_min(matrice, lignes_marquees, colonnes_grisees):
+    lcounter = 0 # Compteur de ligne
+    ccounter = 0 # Compteur de colonne
+    colonnes_non_grisee = colonnes_non_grisees(matrice, colonnes_grisees)
+    minimum = matrice[min(lignes_marquees)][min(colonnes_non_grisee)]
+    for ligne in matrice:
+        for colonne in ligne:
+            print("Lc = "+str(lcounter)+"; cc = " + str(ccounter) + "; lignes grisées = " + str(lignes_marquees) + "; colonnes grisées = "+ str(colonnes_grisees))
+            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees):
+                if (colonne < minimum):
+                    print("MATCH : " + colonne)
+                    minimum = colonne
+            ccounter += 1 # Colonne suivante (élément suivant)
+        ccounter = 0 # Reset de variable
+        lcounter += 1 # Ligne suivante
+    return minimum 
+
+def soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees):
+    min = find_min(matrice, lignes_marquees, colonnes_grisees)
+    lcounter = 0 # Compteur de ligne
+    ccounter = 0 # Compteur de colonne
+    for ligne in matrice:
+        for colonne in ligne:
+            #print("Lc = "+str(lcounter)+"; cc = " + str(ccounter) + "; lignes grisées = " + str(lignes_grisees) + "; colonnes grisées = "+ str(colonnes_grisees))
+            if (lcounter in lignes_grisees) and (ccounter in colonnes_grisees):
+                #print("MATCH")
+                matrice[lcounter][ccounter] += min
+            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees):
+                #print("MATCH")
+                matrice[lcounter][ccounter] -= min
+            ccounter += 1 # Colonne suivante (élément suivant)
+        ccounter = 0 # Reset de variable
+        lcounter += 1 # Ligne suivante
+    return matrice
+        
 
 #print((make_matrice(serveurs, taches)))
 #print(soustraction_colonne(soustraction_ligne(make_matrice(serveurs, taches))))
 matrice = soustraction_colonne(soustraction_ligne(test_matrice))
+print("La matrice est : " + str(matrice))
 zero_encadres, zero_barres = encadrer_zeros(matrice)
+print("Les zéros encadrés : " + str(zero_encadres))
+print("Les zéros barrés : " + str(zero_barres))
 lignes_marquees = marquer_lignes_sans_zero_encadre(matrice, zero_encadres)
 colonnes_marquees = marquer_colonnes_avec_zero_barre_sur_ligne_marquee(zero_barres, lignes_marquees)
+print("Les colonnes marquées : " + str(colonnes_marquees))
 lignes_marquees = marquer_lignes_avec_zero_encadre_sur_colonnes_marquee(zero_encadres, colonnes_marquees, lignes_marquees)
-print(zero_encadres)
-print(zero_barres)
-print(lignes_marquees)
-print(colonnes_marquees)
+print("Les lignes marquées : " + str(lignes_marquees))
+colonnes_grisees, lignes_grisees = griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice)
+print("Les colonnes grisées : " + str(colonnes_grisees))
+print("Les lignes grisées : " + str(lignes_grisees))
+matrice_finale = soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees)
+print("La matrice finale : " + str(matrice_finale))
+
 
 
 #encadrer_zeros(soustraction_colonne(soustraction_ligne(make_matrice(serveurs, taches))))

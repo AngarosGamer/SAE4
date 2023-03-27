@@ -20,11 +20,11 @@ echo "Modification du mot de passe root. Choisissez un mot de passe suffisement 
 passwd
 
 #Téléchargement et execution des scripts devant être présent sur les postes de travail
-wget "https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_client"
-chmod +x ldap_install_client
-source ldap_install_client
+#wget "https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_client"
+#chmod +x ldap_install_client
+#source ldap_install_client
 
-wget "https://raw.githubusercontent.com/AngarosGamer/SAE4/main/nfs/nfs_install_client"
-chmod +x nfs_install_client
-source nfs_install_client
+#wget "https://raw.githubusercontent.com/AngarosGamer/SAE4/main/nfs/nfs_install_client"
+#chmod +x nfs_install_client
+#source nfs_install_client
 
