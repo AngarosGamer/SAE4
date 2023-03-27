@@ -11,6 +11,6 @@ apt install bind9
 
 #verify if bind9 is installed
 if ! which bind9 > /dev/null; then
-   echo -e "bind9 packages not installed, please advuise your system administrator".
+   echo -e "bind9 packages not installed, please advise your system administrator".
 fi
 
