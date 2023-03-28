@@ -19,4 +19,3 @@ echo "Modification du mot de passe root. Choisissez un mot de passe suffisement 
 
 passwd
 
-
