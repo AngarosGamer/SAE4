@@ -74,7 +74,7 @@ description: serveur de l entreprise
 
 dn: cn=Aurele Dunand,ou=Personnes,dc=cipher,dc=com
 objectclass: inetOrgPerson
-divenName: Aurele
+givenName: Aurele
 sn: Dunand
 cn: Aurele Dunand
 uid: dunandau
@@ -83,4 +83,3 @@ EOF
 
 #Ajout du fichier de configuration de la structure
 ldapadd -x -W -D "cn=admin,dc=cipher,dc=com" -H ldap://localhost -f structure.ldif
-

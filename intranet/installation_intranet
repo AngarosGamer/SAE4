@@ -8,7 +8,7 @@ fi
 
 # Installation d'apache2
 apt update
-apt install -y apache2 curl
+apt -y install apache2 curl
 
 # Installation de PHP8.2
 curl -sSL https://packages.sury.org/php/README.txt | bash -x
