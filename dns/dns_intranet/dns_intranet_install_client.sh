@@ -7,7 +7,8 @@ fi
 
 #install bind9 packages
 
-apt install bind9
+#apt -y update
+#apt -y install bind9
 
 #verify if bind9 is installed
 if ! which bind9 > /dev/null; then
