@@ -7,5 +7,4 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Installer le serveur Kerberos
-apt install -y krb5-server
-
+apt install -y krb5-{admin-server,kdc}

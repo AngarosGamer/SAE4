@@ -25,8 +25,8 @@
     };
 EOL
 
-fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
-fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
+#fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
+#fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
 
 # fichier de zone pour les serveurs 
     touch /etc/bind/db.servers.cipher.
