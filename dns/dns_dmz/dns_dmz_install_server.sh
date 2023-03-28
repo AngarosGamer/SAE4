@@ -1,101 +1,146 @@
 #!/bin/bash
-#Check if the user is root
-if [[ $EUID -ne 0 ]]; then
-   echo "Ce script doit être lancé en tant que root" 
-   exit 1
-fi
+#Verfie si le script est lancé en tant que root
+: <<COMMENT
+    if [[ $EUID -ne 0 ]]; then
+    echo "Ce script doit être lancé en tant que root" 
+    exit 1
+    fi
 
-#install bind9 packages
+#installe les packages bind9
 
-apt install bind9
+    apt install bind9
 
-#verify if bind9 is installed
-if ! which bind9 > /dev/null; then
-   echo -e "bind9 packages not installed, please advise your system administrator".
-fi
+#verifie si bind9 est installé
+    if ! which bind9 > /dev/null; then
+    echo -e "bind9 packages not installed, please advise your system administrator".
+    fi
+
+COMMENT
+
+#NAME.CONF
+fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
 
 #ajouter le nom du serveur DNS dans /hostsname
 # cat > /etc/network/interfaces << 'EOL'
-   # This file contain the FQDN of the DNS server
+   # This fileNamedConf contain the FQDN of the DNS server
  #  dns.cipher.intra
 
 #EOL
 
 #gerer les options dans le fichier namded.conf
-    file="/etc/named.conf"
+    
     #verifier lesquelles sont présentes et eviter les doublons
+    #verifier si la ligne "directory" est présente
+    if grep -q 'directory' "$fileNamedConf"; then
+    sed -i '/directory/d' "$fileNamedConf"
+    fi
+
     #verifier si la ligne "recursion no;" est présente
-    if grep 'recursion no;' $file; then
-    sed -i '/options {/a\recursion no;/d' $file
+    if grep -q 'recursion no;' "$fileNamedConf"; then
+    sed -i '/recursion no/d' "$fileNamedConf"
     fi
-    #verifier si la ligne "allow-query {any;};\n" est présente
-    if grep 'allow-transfer { none; }' $file; then
-    sed -i '/allow-transfer { none; };\n/d' $file
+    
+    #verifier si la ligne "allow-query {" est présente
+    if grep -q 'allow-transfer' "$fileNamedConf"; then
+    sed -i '/allow-transfer/d' "$fileNamedConf"
     fi
-
-    #verifier si la ligne "allow-query {any;};\n" est présente
-    if grep 'allow-query {any;};' $file; then
-    sed -i '/options {/a\allow-query {any;};\n/d' $file
-    fi
-
-    #verifier si la ligne "allow-query-cache{any;};\n" est présente
-    if grep 'allow-query-cache{any;};' $file; then
-    sed -i '/options {/a\allow-query-cache{any;};\n/d' $file
+    
+    #verifier si la ligne "allow-query {" est présente
+    if grep -q 'allow-query {' "$fileNamedConf"; then
+    sed -i '/allow-query {/d' "$fileNamedConf"
     fi
 
-    #verifier si la ligne "allow-recursion {localnets;};\n" est présente
-    if grep 'allow-recursion {localnets;};' $file; then
-    sed -i '/options {/a\allow-recursion {localnets;};\n/d' $file
+    #verifier si la ligne "allow-query-cache {" est présente
+    if grep -q 'allow-query-cache {' "$fileNamedConf"; then
+    sed -i '/allow-query-cache {/d' "$fileNamedConf"
     fi
 
-    #verifier si la ligne "forwarders{};\n" est présente
-    if grep 'forwarders{};' $file; then
-    sed -i '/options {/a\forwarders{};\n/d' $file
+    #verifier si la ligne "allow-recursion {" est présente
+    if grep 'allow-recursion {' "$fileNamedConf"; then
+    sed -i '/allow-recursion {/d' "$fileNamedConf"
     fi
 
-    #verifier si la ligne "dnssec-validation auto;\n" est présente
-    if grep 'dnssec-validation auto;' $file; then
-    sed -i '/options {/a\dnssec-validation auto;\n/d' $file
+    #verifier si la ligne "forwarders{" est présente
+    if grep 'forwarders{' "$fileNamedConf"; then
+    sed -i '/forwarders{/d' "$fileNamedConf"
     fi
 
-    #verifier si la ligne "auth-nxdomain no;\n};' /etc/named.conf" est présente
-    if grep 'auth-nxdomain no;' $file; then
-    sed -i '/options {/a\auth-nxdomain no;\n}/d;' $file
+    #verifier si la ligne "dnssec-validation" est présente
+    if grep 'dnssec-validation' "$fileNamedConf"; then
+    sed -i '/dnssec-validation/d' "$fileNamedConf"
+    fi
+
+    #verifier si la ligne "auth-nxdomain" est présente
+    if grep 'auth-nxdomain' "$fileNamedConf"; then
+    sed -i '/auth-nxdomain/d' "$fileNamedConf"
     fi
 
     #verifier si la ligne "options {" est présente
-    if ! grep 'options {' $file; then
-    sed -i '/options {\n}/d' $file
+    if ! grep 'options {' "$fileNamedConf"; then
+    sed -i '$a\options {\n};' "$fileNamedConf"
+    echo 'options'
+    cat "$fileNamedConf"
+    fi
+
+    #verifier si des lignes "};" sont présentes
+    if grep '};' "$fileNamedConf"; then
+    sed -i '/};/d' "$fileNamedConf"
     fi
 
     #gerer les options dans le fichier namded.conf
-    sed -i '/options {/a\allow-transfer { none; };\n
-    allow-query {any;};\n
-    allow-query-cache{any;};\n
-    allow-recursion {localnets;};\n
-    forwarders{};\n
-    dnssec-validation auto;\n
-    auth-nxdomain no;\n};' $file
+    sed -i '/options {/a directory "/var/cache/bind";\nallow-transfer { none; } \nallow-query {any;};\nallow-query-cache{any;};\nallow-recursion {localnets;};\nforwarders{\n};\ndnssec-validation auto;\nauth-nxdomain no;\n' "$fileNamedConf"
 
 #creer la zone de l'intranet
-    cat > /etc/named.conf << 'EOL'
-    // Define the DMZ zone
-    zone "dmz.example.com" {
-        type master;
-        file "/etc/bind/zones/dmz.cipher.com";
-    };
-    EOL
+
+    sed -i '$a\// Define the DMZ zone\nzone "dmz.example.com" {\n    type master;\n    fileNamedConf "/etc/bind/zones/dmz.cipher.com";\n};' "$fileNamedConf"
 
 
-
+fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
 
 
 #vérifier si la ligne "include named.conf.local" est présente
-if grep 'include "/etc/bind/named.conf.local";' /etc/named.conf; then
-    echo "is(are) present"
-else
-    echo "include named.conf.local is added to the file"
-    #ajouter à la fin du fichier le include "etc/bind/named.conf.local"
-    sed -i '$a\include "/etc/bind/named.conf.local";' /etc/named.conf
-    echo "added"
-fi
+    if grep "include "$fileNamedConfLocal";" $fileNamedConf; then
+        echo "is(are) present"
+    else
+        echo "include named.conf.local is added to the fileNamedConf"
+        #ajouter à la fin du fichier le include "etc/bind/named.conf.local"
+        sed -i '$a\include "/etc/bind/named.conf.local";' $fileNamedConf
+        echo "added"
+    fi
+
+#NAMED.CONF.LOCAL
+
+#overwriting de named.conf.local
+    cat > $fileNamedConfLocal << 'EOL'
+    // Configuration du serveur DNS pour la DMZ
+
+    // Zone pour le serveur web dans la DMZ
+    zone "dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.dmz.example.com";
+    };
+
+    // Zone pour le serveur de messagerie dans la DMZ
+    zone "mail.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.mail.dmz.example.com";
+    };
+
+    // Zone pour les appareils de surveillance dans la DMZ
+    zone "surveillance.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.surveillance.dmz.example.com";
+    };
+
+    // Zone pour les appareils IoT dans la DMZ
+    zone "iot.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.iot.dmz.example.com";
+    };
+
+    // Autoriser les transferts de zone pour les serveurs esclaves
+    allow-transfer {192.168.100.2; 192.168.100.3;};
+
+    // Autoriser les requêtes depuis la DMZ uniquement
+    allow-query {any;};
+EOL
