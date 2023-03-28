@@ -17,8 +17,11 @@
 
 COMMENT
 
-#NAME.CONF
 fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
+fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
+
+#NAME.CONF
+
 
 #ajouter le nom du serveur DNS dans /hostsname
 # cat > /etc/network/interfaces << 'EOL'
@@ -95,9 +98,6 @@ fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
     sed -i '$a\// Define the DMZ zone\nzone "dmz.example.com" {\n    type master;\n    fileNamedConf "/etc/bind/zones/dmz.cipher.com";\n};' "$fileNamedConf"
 
 
-fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
-
-
 #vérifier si la ligne "include named.conf.local" est présente
     if grep "include "$fileNamedConfLocal";" $fileNamedConf; then
         echo "is(are) present"
@@ -111,36 +111,5 @@ fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
 #NAMED.CONF.LOCAL
 
 #overwriting de named.conf.local
-    cat > $fileNamedConfLocal << 'EOL'
-    // Configuration du serveur DNS pour la DMZ
-
-    // Zone pour le serveur web dans la DMZ
-    zone "dmz.example.com" {
-        type master;
-        file "/etc/bind/zones/db.dmz.example.com";
-    };
-
-    // Zone pour le serveur de messagerie dans la DMZ
-    zone "mail.dmz.example.com" {
-        type master;
-        file "/etc/bind/zones/db.mail.dmz.example.com";
-    };
-
-    // Zone pour les appareils de surveillance dans la DMZ
-    zone "surveillance.dmz.example.com" {
-        type master;
-        file "/etc/bind/zones/db.surveillance.dmz.example.com";
-    };
-
-    // Zone pour les appareils IoT dans la DMZ
-    zone "iot.dmz.example.com" {
-        type master;
-        file "/etc/bind/zones/db.iot.dmz.example.com";
-    };
-
-    // Autoriser les transferts de zone pour les serveurs esclaves
-    allow-transfer {192.168.100.2; 192.168.100.3;};
-
-    // Autoriser les requêtes depuis la DMZ uniquement
-    allow-query {any;};
-EOL
+    rm $fileNamedConfLocal
+    cp dmzNamed.conf.local $fileNamedConfLocal

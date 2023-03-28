@@ -1,0 +1,31 @@
+    // Configuration du serveur DNS pour la DMZ
+
+    // Zone pour le serveur web dans la DMZ
+    zone "dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.dmz.example.com";
+    };
+
+    // Zone pour le serveur de messagerie dans la DMZ
+    zone "mail.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.mail.dmz.example.com";
+    };
+
+    // Zone pour les appareils de surveillance dans la DMZ
+    zone "surveillance.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.surveillance.dmz.example.com";
+    };
+
+    // Zone pour les appareils IoT dans la DMZ
+    zone "iot.dmz.example.com" {
+        type master;
+        file "/etc/bind/zones/db.iot.dmz.example.com";
+    };
+
+    // Autoriser les transferts de zone pour les serveurs esclaves
+    allow-transfer {192.168.100.2; 192.168.100.3;};
+
+    // Autoriser les requêtes depuis la DMZ uniquement
+    allow-query {any;};
