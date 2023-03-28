@@ -26,6 +26,3 @@ text="127.0.0.1     dns.cipher.intra"
 #text2="192.168.0.128    dns.cipher.intra"
 
 sed -i '2i' "$text" /etc/hosts
-
-#sed -i '3i' "$text2" /etc/hosts
-
