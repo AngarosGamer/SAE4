@@ -22,3 +22,6 @@ passwd
 apt install -y zabbix-agent
 sed -i 's/Server=127.0.0.1/Server=192.168.1.10/g' /etc/zabbix/zabbix_agentd.conf
 sed -i 's/ServerActive=127.0.0.1/ServerActive=192.168.1.10/g' /etc/zabbix/zabbix_agentd.conf
+
+systemctl enable zabbix-agent
+systemctl restart zabbix-agent
