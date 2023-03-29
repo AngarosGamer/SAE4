@@ -1,44 +1,57 @@
 import numpy as np
 import sys
-import time
+import random
 np.set_printoptions(threshold=sys.maxsize)
 
 def generate_auto_matrix(taillex, tailley, intervalle): # Génération automatique d'une matrice de taille variable avec des nombres variables
-    return np.random.randint(1, intervalle, size=(taillex, tailley)) # Nombre minimum = 1; Nombre maximum = intervalle, taille de la matrice défini par taillex et tailley
+    matrice = np.random.randint(1, intervalle, size=(taillex, tailley)) # Nombre minimum = 1; Nombre maximum = intervalle, taille de la matrice défini par taillex et tailley
+    return make_square_matrice(matrice)
 
 def make_matrice(serveurs, taches): # Création d'une matrice en utilisant un lien entre array de serveurs et array de tâches
     matrice = []
-    for i in serveurs:
+    for i in serveurs: # Pour chaque serveur
         ligne = []
-        for j in taches:
-            ligne.append(i * j)
-        matrice.append(ligne)
-    return np.array(matrice)
+        for j in taches: # Pour chaque tâche qui va être effectuée sur le serveur
+            ligne.append(i * j) # On ajoute le produit de la valeur du serveur et de la valeur de la tâche à la ligne de matrice (schématisation du travail nécessaire pour effectuer la tâche sur le serveur)
+        matrice.append(ligne) # On ajoute la ligne à la matrice
+    matrice = np.array(matrice) # On transforme la matrice en array numpy
+    return make_square_matrice(matrice)
 
-def soustraction_ligne(matrice):
+def make_square_matrice(matrice): # Création d'une matrice carrée en ajoutant des valeurs à la fin de la matrice
+    if (len(matrice[0]) > len(matrice)): # Si le nombre de tâches est supérieur au nombre de serveurs
+        print("Attention, la matrice n'est pas carrée, il y a plus de tâches que de serveurs : on rajoute des valeurs maximales à la fin de la matrice")
+        for i in range(len(matrice[0]) - len(matrice)): # Pour chaque ligne à rajouter
+            matrice = np.append(matrice, [[matrice.max()] * len(matrice[0])], axis=0) # On rajoute une ligne de valeurs maximales + 100
+    elif (len(matrice[0]) < len(matrice)): # Si le nombre de tâches est inférieur au nombre de serveurs
+        print("Attention, la matrice n'est pas carrée, il y a plus de serveurs que de tâches : on rajoute des valeurs maximales à la fin de la matrice")
+        for i in range(len(matrice) - len(matrice[0])): # Pour chaque colonne à rajouter
+            matrice = np.append(matrice, [[matrice.max() + 100] * len(matrice)], axis=1) # On rajoute une colonne de valeurs maximales + 100
+    return matrice
+
+def soustraction_ligne(matrice): # Soustraction de la valeur minimale de chaque ligne à chaque élément de la ligne
     index = -1
-    for ligne in matrice:
+    for ligne in matrice: # Pour chaque ligne de la matrice
         index+=1
-        minimum = min(ligne)
+        minimum = min(ligne) # On récupère la valeur minimale de la ligne
         jindex = -1
-        for colonne in ligne:
+        for colonne in ligne: # Pour chaque élément de la ligne (donc colonne)
             jindex+=1
-            matrice[index][jindex] -= minimum
+            matrice[index][jindex] -= minimum # On soustrait la valeur minimale de la ligne à l'élément de la ligne
 
     return matrice
 
-def soustraction_colonne(matrice):
-    nbColonnes = len(matrice[0])
+def soustraction_colonne(matrice): # Soustraction de la valeur minimale de chaque colonne à chaque élément de la colonne
+    nbColonnes = len(matrice[0]) # Nombre de colonnes
     minColonne = []
-    for i in range(nbColonnes):
-        value = [min(i) for i in zip(*matrice)][i]
-        minColonne.append(value)
-    for ligne in range(len(matrice)):
-        for colonne in range(len(matrice[ligne])):
-            matrice[colonne][ligne] = matrice[colonne][ligne] - minColonne[ligne]
+    for i in range(nbColonnes): # Pour chaque colonne
+        value = [min(i) for i in zip(*matrice)][i] # On récupère la valeur minimale de la colonne
+        minColonne.append(value) # On ajoute la valeur minimale de la colonne à un array contenant chaque valeur minimale de chaque colonne
+    for ligne in matrice.T: # Pour chaque ligne de la matrice transposée (donc colonne de la matrice originale)
+        for colonne in ligne: # Pour chaque élément de la ligne (donc élément de la colonne sur la matrice originale)
+            colonne -= minColonne # On soustrait la valeur minimale de la colonne à l'élément de la colonne
     return matrice
 
-def encadrer_zeros(matrice):
+def encadrer_zeros(matrice): # Encadrement des zéros de la matrice
     zero_encadre_indexes = [] # Les zéros encadrés
     zero_barre_indexes = [] # Les zéros barrés
     lcounter = 0 # Compteur de ligne
@@ -92,65 +105,64 @@ def marquer_lignes_avec_zero_encadre_sur_colonnes_marquee(indexes_encadres, colo
     return lignes_marquees # Return 
 
 
-def griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice):
+def griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice): # Grise les lignes et colonnes selon les lignes et colonnes marquées
     lignes = []
-    for ligne in range(len(matrice)):
-        lignes.append(ligne)
-    lignes_grisees = list(set(lignes).difference(lignes_marquees))
+    for ligne in range(len(matrice)): # Pour chaque ligne de la matrice
+        lignes.append(ligne) # On ajoute le numéro de ligne dans la liste des lignes
+    lignes_grisees = list(set(lignes).difference(lignes_marquees)) # Les lignes grisées sont l'inverse des lignes marquées
     
-    colonnes_grisee = colonnes_marquees
-    return colonnes_grisee, lignes_grisees
+    colonnes_grisee = colonnes_marquees # Les colonnes grisées sont les colonnes marquées
+    return colonnes_grisee, lignes_grisees # Return
 
-def colonnes_non_grisees(matrice, colonnes_grisees):
+def colonnes_non_grisees(matrice, colonnes_grisees): # Trouve les colonnes non grisées
     colonnes = []
     ccounter = 0
-    for ligne in matrice:
-        for colonne in ligne:
-            colonnes.append(ccounter)
+    for ligne in matrice: # Pour chaque ligne de la matrice
+        for colonne in ligne: # Pour chaque élément de la ligne
+            colonnes.append(ccounter) # On ajoute le numéro de colonne dans la liste des colonnes
             ccounter += 1
-    return list(set(colonnes).difference(colonnes_grisees))
+    return list(set(colonnes).difference(colonnes_grisees)) # Les lignes non grisées sont l'inverse des lignes grisées
 
-def find_min(matrice, lignes_marquees, colonnes_grisees):
+def find_min(matrice, lignes_marquees, colonnes_grisees): # Trouve le minimum de tous les éléments n'étant pas sur une ligne grisée
     lcounter = 0 # Compteur de ligne
     ccounter = 0 # Compteur de colonne
-    colonnes_non_grisee = colonnes_non_grisees(matrice, colonnes_grisees)
-    if (len(lignes_marquees) == 0):
-        minimum = 0
-    else:
-        minimum = matrice[min(lignes_marquees)][min(colonnes_non_grisee)]
-    for ligne in matrice:
-        for colonne in ligne:
-            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees):
-                if (colonne < minimum):
-                    minimum = colonne
+    colonnes_non_grisee = colonnes_non_grisees(matrice, colonnes_grisees) # On récupère les colonnes non grisées
+    if (len(lignes_marquees) == 0): # Si aucune ligne n'est marquée
+        minimum = 0 # Pas de minimum, la matrice est donc déjà optimale. On utilise zéro pour ne pas impacter le résultat
+    else: # Sinon
+        minimum = matrice[min(lignes_marquees)][min(colonnes_non_grisee)] # On initialise le minimum avec le premier élément non grisé
+    for ligne in matrice: # Pour chaque ligne de la matrice
+        for colonne in ligne: # Pour chaque élément de la ligne
+            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees): # Si ligne et colonnes ne sont pas grisées
+                if (colonne < minimum): # Et si l'élément actuel est plus petit que le minimum
+                    minimum = colonne # On met à jour le minimum
             ccounter += 1 # Colonne suivante (élément suivant)
         ccounter = 0 # Reset de variable
         lcounter += 1 # Ligne suivante
-    return minimum 
+    return minimum # On retourne le minimum
 
-def soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees):
-    min = find_min(matrice, lignes_marquees, colonnes_grisees)
+def soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees): # Soustrait le minimum de tous les éléments n'étant pas sur une case grisée
+    min = find_min(matrice, lignes_marquees, colonnes_grisees) # On récupère le minimum des cases non grisées
     lcounter = 0 # Compteur de ligne
     ccounter = 0 # Compteur de colonne
-    for ligne in matrice:
-        for colonne in ligne:
-            #print("Lc = "+str(lcounter)+"; cc = " + str(ccounter) + "; lignes grisées = " + str(lignes_grisees) + "; colonnes grisées = "+ str(colonnes_grisees))
-            if (lcounter in lignes_grisees) and (ccounter in colonnes_grisees):
-                matrice[lcounter][ccounter] += min
-            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees):
-                matrice[lcounter][ccounter] -= min
+    for ligne in matrice: # Pour chaque ligne de la matrice
+        for colonne in ligne: # Pour chaque élément de la ligne
+            if (lcounter in lignes_grisees) and (ccounter in colonnes_grisees): # Si ligne et colonnes sont grisées (case doublement grisée)
+                matrice[lcounter][ccounter] += min # On ajoute le minimum
+            if (lcounter in lignes_marquees) and (ccounter not in colonnes_grisees): # Si case non grisée
+                matrice[lcounter][ccounter] -= min # On soustrait le minimum
             ccounter += 1 # Colonne suivante (élément suivant)
         ccounter = 0 # Reset de variable
         lcounter += 1 # Ligne suivante
-    return matrice
+    return matrice # On retourne la matrice modifiée
 
-def choose_serveurs_taches(matrice):
-    links = []
+def choose_serveurs_taches(matrice): # On attribue les tâches aux serveurs	
+    links = [] # Liste contenant l'attribution entre serveurs et tâches
     erreur = False
     lcounter = 0 # Compteur de ligne
     ccounter = 0 # Compteur de colonne
 
-    zeros = np.argwhere(matrice == 0)
+    zeros = np.argwhere(matrice == 0) # On récupère les coordonnées des zéros de la matrice
 
     # Les lignes ayant un seul 0 peuvent directement être séléctionnés (seul choix possible)
     for ligne in matrice:
@@ -168,7 +180,7 @@ def choose_serveurs_taches(matrice):
         lcounter += 1 # Changement de ligne
     lcounter = 0 # Reset du compteur de ligne
 
-    # Pour les colonnes ayant plus de un 0, sélectionner celles dont les colonnes ont un seul 0
+    # Pour les lignes ayant plus de un 0, sélectionner celles dont les colonnes ont un seul 0
     for colonne in matrice.T: # Transoposition de la matrice pour en obtenir les colonnes
         if (np.count_nonzero(colonne == 0) == 1): # Chercher les colonnes ayant seulement un seul 0
             for valeur in colonne: # Pour chaque valeur dans la colonne
@@ -184,94 +196,118 @@ def choose_serveurs_taches(matrice):
         lcounter += 1 # Changement de ligne
     lcounter = 0  # Reset du compteur de ligne
 
-    lignes_barres = []
-    colonnes_barres = []
+    lignes_barres = [] # Liste des lignes ayant déjà un 0 sélectionné (serveur-tâche déjà attribué)
+    colonnes_barres = [] # Liste des colonnes ayant déjà un 0 sélectionné (serveur-tâche déjà attribuée)
 
-    print(links)
-
-    for selected in links:
-        lignes_barres.append(selected[0])
+    for selected in links: # Pour chaque lien déjà établi entre serveur et tâche
+        lignes_barres.append(selected[0]) # On ajoute la ligne et la colonne à la liste des lignes et colonnes déjà sélectionnées
         colonnes_barres.append(selected[1])
 
+    # L'idée du code ci-après est de sélectionner pour chaque 0 restant celui qui a le moins de possibilités de sélection (le moins de conflits : le moins de 0 sur la même colonne)
     lcounter = 0 # Compteur de ligne
     ccounter = 0 # Compteur de colonne
-    for ligne in matrice:
+    for ligne in matrice: # Pour chaque ligne de la matrice
         counter = {}
-        for colonne in ligne:
-            if colonne == 0:
+        for colonne in ligne: # Pour chaque élément de la ligne
+            if colonne == 0: # Si le nombre vaut 0
                 count = 0
-                for position in zeros.tolist():
-                    #print(position)
-                    #print(str(lcounter) + " : " + str(ccounter))
-                    if (ccounter == position[1]):
-                        if (position[1] not in colonnes_barres) and (position[0] not in lignes_barres):
-                            if (lcounter != position[0]):
-                                count += 1
-                        counter[ccounter] = count
+                for position in zeros.tolist(): # Pour chaque zéro de la matrice
+                    if (ccounter == position[1]): # Si la colonne du zéro correspond à la colonne actuelle (sélection )
+                        if (position[1] not in colonnes_barres) and (position[0] not in lignes_barres): # Si la ligne et la colonne du zéro ne sont pas déjà sélectionnées
+                            if (lcounter != position[0]): # Si la ligne du zéro n'est pas la ligne actuelle
+                                count += 1 # C'est un conflit (un 0 non sélectionné sur la même colonne)
+                        counter[ccounter] = count # On associe le nombre de conflits à la colonne pour un zéro sur cette ligne
             ccounter += 1 # Augmentation compteur colonne
-        print(lignes_barres)
-        print(colonnes_barres)
-        print(counter)
-        if len(counter) != 0:
-            if (lcounter not in lignes_barres) and (min(counter, key = counter.get) not in colonnes_barres):
-                if ([lcounter, min(counter, key = counter.get)] not in links):
-                    links.append([lcounter, min(counter, key = counter.get)])
-                if (lcounter not in lignes_barres):
-                    lignes_barres.append(lcounter)
-                if (min(counter, key = counter.get) not in colonnes_barres):
-                    colonnes_barres.append(min(counter, key = counter.get))
-        print("Liens : " +str(links) + "\n")
+        if len(counter) != 0: # Si il y a des conflits sur ce zéro
+            if (lcounter not in lignes_barres) and (min(counter, key = counter.get) not in colonnes_barres): # Si la ligne et la colonne du zéro ne sont pas déjà sélectionnées
+                if ([lcounter, min(counter, key = counter.get)] not in links): # Et si le lien n'est pas déjà sélectionné
+                    links.append([lcounter, min(counter, key = counter.get)]) # On ajoute le lien
+                if (lcounter not in lignes_barres): # Si la ligne n'est pas déjà sélectionnée
+                    lignes_barres.append(lcounter) # On "sélectionne" la ligne
+                if (min(counter, key = counter.get) not in colonnes_barres): # Si la colonne n'est pas déjà sélectionnée
+                    colonnes_barres.append(min(counter, key = counter.get)) # On "sélectionne" la colonne
         ccounter = 0 # Reset de la colonne
         lcounter += 1 # Changement de ligne
 
-        
-    
-    return links
 
-def print_serveurs_taches(links):
-    print(links)
-    for link in links:
-        print("Le serveur "+ str(int(link[0])) + " prend la tache " + str(int(link[1])))
+    # Dans ce dernier morceau de code, on sélectionne les valeurs restantes (pas forcément 0, sur les lignes et colonnes qui n'ont pas encore été sélectionnées), en prenant les valeurs les plus faibles
+    lignes = []
+    for i in range(len(matrice)): # Pour chaque ligne de la matrice
+        lignes.append(i) # On ajoute le numéro de la ligne à la liste des lignes
+    colonnes = [] # De même pour les colonnes
+    for i in range(len(matrice[0])):
+        colonnes.append(i)
+    for couple in links: # Pour chaque lien déjà sélectionné
+            if (couple[0] in lignes_barres): # Si la ligne du lien est déjà sélectionnée
+                lignes.remove(couple[0]) # On retire la ligne de la liste des lignes à sélectionner
+            if (couple[1] in colonnes_barres): # Si la colonne du lien est déjà sélectionnée
+                colonnes.remove(couple[1]) # On retire la colonne de la liste des colonnes à sélectionner
+    while len(lignes) != 0 and len(colonnes) != 0: # Tant qu'il reste des lignes et des colonnes à sélectionner
+        elements = {}
+        for ligne in lignes: # On étudie ligne à ligne
+            for colonne in colonnes: # Pour chaque élément de la ligne restante
+                elements[matrice[ligne][colonne]] = [ligne,colonne] # On enregistre dans un dictionnaire la valeur de la matrice pour cette ligne et colonne, et une liste contenant la ligne et la colonne
+        res = elements[min(elements)] # On sélectionne la valeur la plus faible pour la ligne étudiée
+        links.append(res) # On ajoute le lien minimum
+        lignes.remove(res[0]) # On retire la ligne et la colonne de la liste des lignes et colonnes à sélectionner
+        colonnes.remove(res[1])
+    return links # On a fait tous les liens de manière optimale, on retourne la liste des liens
 
-type = int(input("Quelle méthode voulez-vous :\n 1) Matrice auto-générée\n 2) Matrice de lien serveurs - tâches\n 3) Matrice pré-configurée\nChoisissez avec le nombre précédant la commande\n"))
-erreur = False
-if type == 1:
-    taillex = int(input("Quelle est la taille horizontale de la matrice que vous voulez (entrez un nombre) : "))
-    tailley = int(input("Quelle est la taille verticale de la matrice que vous voulez (entrez un nombre) : "))
-    intervalle = int(input("Quelle est le nombre maximal dans la matrice (entrez un nombre) : "))
-    matrice = generate_auto_matrix(taillex, tailley, intervalle)
-    print("La matrice auto-générée est : \n" + str(matrice))
-elif type == 2:
-    serveurs = []
-    serveur_count = int(input("Combien y a-t-il de serveurs (entrez un nombre N >= 1) ? \n"))
-    for i in range(0, serveur_count):
-        valeur = int(input("Valeur du serveur "+ str(i) +" : "))
-        while valeur <= 0:
-            print("La valeur doit être comprise entre 1 et N >= 1")
-            valeur = int(input("Valeur du serveur "+ str(i) +" : "))
-        serveurs.append(valeur)
-    taches = []
-    taches_count = int(input("Combien y a-t-il de tâches (entrez un nombre N >= 1) ? \n"))
-    for i in range(0, taches_count):
-        valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
-        while valeur <= 0:
-            print("La valeur doit être comprise entre 1 et N >= 1")
-            valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
-        taches.append(valeur)
-    matrice = make_matrice(serveurs, taches)
-    print("La matrice liée tâches-serveurs est : \n" + str(matrice))
-else:
-    matrice = np.array([
-        [5, 3, 1, 1, 6],
-        [7, 7, 5, 8, 7],
-        [9, 3, 9, 8, 9],
-        [8, 3, 4, 3, 1],
-        [2, 1, 3, 9, 9]
-    ])
+def print_serveurs_taches(links, size_serveurs): # Fonction qui affiche les liens serveurs-tâches
+    for link in links: # Pour chaque lien
+        if (int(link[0]) > size_serveurs): # Comme on a parfois ajouté des serveurs (matrice non carrée), on vérifie si le serveur est un serveur "virtuel" ajouté
+            print("La serveur "+ str(int(link[0] - size_serveurs)) + " prend la tache " + str(int(link[1])) + " avec un temps de " + str(int(matrice[int(link[0])][int(link[1])]))) # Si c'est le cas, on affiche ce lien sur un serveur réel
+        else: # Sinon, on affiche le lien sur un serveur réel
+            print("Le serveur "+ str(int(link[0])) + " prend la tache " + str(int(link[1])) + " avec un temps de " + str(int(matrice[int(link[0])][int(link[1])])))
 
-mode = int(input("Voulez-vous le mode :\n 1) Pas à pas (arrêt entre chaque opération)\n 2) Résultat (calcul direct du résultat)\nChoisissez avec le nombre précédant la commande\n"))
+ERR = False
+count = 1
+while not ERR:
+    # Sélection de méthode
+    #type = int(input("Quelle méthode voulez-vous :\n 1) Matrice auto-générée\n 2) Matrice de lien serveurs - tâches\n 3) Matrice pré-configurée\nChoisissez avec le nombre précédant la commande\n"))
+    type = 2
+    if type == 1: # Cas ou la matrice est auto-générée aléatoirement en fonction de la taille voulue et de l'intervalle de valeurs
+        serveur_count = int(input("Quelle est la taille horizontale de la matrice que vous voulez (entrez un nombre) : "))
+        taches_count = int(input("Quelle est la taille verticale de la matrice que vous voulez (entrez un nombre) : "))
+        intervalle = int(input("Quelle est le nombre maximal dans la matrice (entrez un nombre) : "))
+        matrice = generate_auto_matrix(serveur_count, taches_count, intervalle)
+        print("La matrice auto-générée est : \n" + str(matrice))
+    elif type == 2: # Cas ou la matrice est générée en fonction des valeurs entrées par l'utilisateur pour chaque serveur et chaque tâche
+        serveurs = []
+        #serveur_count = int(input("Combien y a-t-il de serveurs (entrez un nombre N >= 1) ? \n"))
+        #for i in range(0, serveur_count):
+        #   valeur = int(input("Valeur du serveur "+ str(i) +" : "))
+        #   while valeur <= 0:
+        #       print("La valeur doit être comprise entre 1 et N >= 1")
+        #       valeur = int(input("Valeur du serveur "+ str(i) +" : "))
+        #   serveurs.append(valeur)
+        taches = []
+        #taches_count = int(input("Combien y a-t-il de tâches (entrez un nombre N >= 1) ? \n"))
+        #for i in range(0, taches_count):
+        #    valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
+        #    while valeur <= 0:
+        #        print("La valeur doit être comprise entre 1 et N >= 1")
+        #        valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
+        #    taches.append(valeur)
+        for i in range(7):
+            serveurs.append(random.randint(1, 80000))
+        for i in range(10):
+            taches.append(random.randint(1, 80000))
+        matrice = make_matrice(serveurs, taches)
+        #print("La matrice liée tâches-serveurs est : \n" + str(matrice))
+    else: # Cas ou la matrice est pré-configurée
+        matrice = np.array([
+            [100, 300, 140, 250, 120,  90,  40, 120, 130, 170],
+            [ 50, 150,  70, 125,  60,  45,  20,  60,  65,  85],
+            [ 70, 210,  98, 175,  84,  63,  28,  84,  91, 119],
+            [150, 450, 210, 375, 180, 135,  60, 180, 195, 255],
+            [ 60, 180,  84, 150,  72,  54,  24,  72,  78, 102],
+            [ 90, 270, 126, 225, 108,  81,  36, 108, 117, 153]
+        ])
 
-if not erreur:   
+    # Sélection de mode d'affichage
+    #mode = int(input("Voulez-vous le mode :\n 1) Pas à pas (arrêt entre chaque opération)\n 2) Résultat (calcul direct du résultat)\nChoisissez avec le nombre précédant la commande\n"))
+    mode = 2
     matrice = soustraction_colonne(soustraction_ligne(matrice))
     if (mode == 1):
         print("Après soustraction en lignes et colonnes, la matrice est : \n" + str(matrice))
@@ -302,8 +338,6 @@ if not erreur:
             print("Les lignes marquées : " + str(lignes_marquees))
             input("Appuyez sur entrer pour continuer\n\n")
     
-        print(str(lignes_marquees) + ":" + str(lignes_marquees_before))
-        print(str(len(lignes_marquees_before) == len(lignes_marquees)) +" + "+ str(len(colonnes_marquees_before) == len(colonnes_marquees)))
         if (len(lignes_marquees_before) == len(lignes_marquees)) and (len(colonnes_marquees_before) == len(colonnes_marquees)):
             change = False
         else:
@@ -318,6 +352,13 @@ if not erreur:
 
 
     matrice_finale = soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees)
-    print("La matrice finale : \n" + str(matrice_finale))
+    #print("La matrice finale : \n" + str(matrice_finale))
     links = choose_serveurs_taches(matrice_finale)
-    print_serveurs_taches(links)
+    if (len(links) != 10 or len(links) != 10):
+            print(str(links) + " : \n" + str(matrice_finale))
+            print_serveurs_taches(links, 7)
+            print("Erreur : le nombre de serveurs et de tâches ne correspond pas à la matrice " + str(count))
+            input()
+    print("Réussite de la matrice " + str(count))
+    count += 1
+    #print_serveurs_taches(links, 7)
