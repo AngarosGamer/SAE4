@@ -1,19 +1,17 @@
 #!/bin/bash
+# Fonctions
+    function error {
+        >&2 echo -e "\033[1;31mERROR:\033[0m $1"; shift
+        exit "${1:-1}"
+    }
 #Verfie si le script est lancé en tant que root
     if [[ $EUID -ne 0 ]]; then
-    echo "Ce script doit être lancé en tant que root" 
-    exit 1
+        echo "Ce script doit être lancé en tant que root" 
+        exit 1
     fi
 
 #installe les packages bind9
-    apt -y update
-    apt -y install bind9
-
-#verifie si bind9 est installé
-    if ! which bind9 > /dev/null; then
-    echo -e "bind9 packages not installed, please advise your system administrator".
-    fi
-
+    apt -y install bind9 || error "L'installation a échoué."
 
 fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
 fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
@@ -119,28 +117,27 @@ COMMENT
 
 #ajouter les enregistrements dans le fichier de zone
     cat > /etc/bind/db.dmz.cipher. << 'EOL'
-    $TTL 86400
-    @       IN      SOA     dmz.cipher.com. root.dmz.cipher. (
-                            2020102001      ; Serial
-                            3600            ; Refresh
-                            1800            ; Retry
-                            604800          ; Expire
-                            86400 )         ; Minimum TTL
-    ;
-    @       IN      NS      dmz.cipher.
-    dns       IN      A       192.168.0.4
-    web       IN      A       192.168.0.3
+$TTL 86400
+@       IN      SOA     dmz.cipher.com. root.dmz.cipher. (
+                        2020102001      ; Serial
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Minimum TTL
+;
+@       IN      NS      dmz.cipher.
+dns       IN      A       192.168.0.4
+web       IN      A       192.168.0.3
 EOL
 
 #ajouter les directives au fichier interfaces
     cat > /etc/network/interfaces << 'EOL'
-    iface enp1s0 inet static
-    address 192.168.0.4
-    netmask 255.255.255.0
-    dns-nameservers 192.168.0.4
+iface enp1s0 inet static
+address 192.168.0.4
+netmask 255.255.255.0
+dns-nameservers 192.168.0.4
 EOL
 
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
-    ifdown enp1s0 && ifup enp1s0

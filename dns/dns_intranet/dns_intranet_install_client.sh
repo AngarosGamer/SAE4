@@ -16,11 +16,11 @@ if ! which bind9 > /dev/null; then
 fi
 
 #ajouter le nom du serveur DNS dans /hostsname
- cat > /etc/network/interfaces << 'EOL'
-   # This file contain the FQDN of the DNS server
-   dns.cipher.intra
+cat > /etc/network/interfaces << 'EOF'
+# This file contain the FQDN of the DNS server
+dns.cipher.intra
 
-EOL
+EOF
 
 #associer l'adresse IPv4 dans le fichier hosts
 text="127.0.0.1     dns.cipher.intra"

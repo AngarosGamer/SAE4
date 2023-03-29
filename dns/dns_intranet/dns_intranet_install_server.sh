@@ -15,14 +15,14 @@
     fi
 #completer le fichier named.conf.local
     cat > /etc/bind/named.conf.local << 'EOL'
-    zone "users.cipher" {
-        type master;
-        file "/etc/bind/db.users.cipher.";
-    };
-    zone "servers.cipher" {
-        type master;
-        file "/etc/bind/db.servers.cipher.";
-    };
+zone "users.cipher" {
+    type master;
+    file "/etc/bind/db.users.cipher.";
+};
+zone "servers.cipher" {
+    type master;
+    file "/etc/bind/db.servers.cipher.";
+};
 EOL
 
 #fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
@@ -35,46 +35,45 @@ EOL
 
 #remplir le fichier db.servers.cipher.
     cat > /etc/bind/db.servers.cipher. << 'EOL'
-    $TTL 86400
-    @       IN      SOA     servers.cipher.com. root.servers.cipher. (
-                            2020102001      ; Serial
-                            3600            ; Refresh
-                            1800            ; Retry
-                            604800          ; Expire
-                            86400 )         ; Minimum TTL
-    ;
-    @       IN      NS      servers.cipher.
-    sgbd      IN      A     192.168.1.3
-    log       IN      A     192.168.1.4
-    files     IN      A     192.168.1.5
-    dns       IN      A     192.168.1.6
-    ldap      IN      A     192.168.1.7
-    dhcp      IN      A     192.168.1.8
-    kerberos  IN      A     192.168.1.9
+$TTL 86400
+@       IN      SOA     servers.cipher.com. root.servers.cipher. (
+                        2020102001      ; Serial
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Minimum TTL
+;
+@       IN      NS      servers.cipher.
+sgbd      IN      A     192.168.1.3
+log       IN      A     192.168.1.4
+files     IN      A     192.168.1.5
+dns       IN      A     192.168.1.6
+ldap      IN      A     192.168.1.7
+dhcp      IN      A     192.168.1.8
+kerberos  IN      A     192.168.1.9
 
 EOL
 #remplir le fichier db.users.cipher.
     cat > /etc/bind/db.users.cipher. << 'EOL'
-    $TTL 86400
-    @       IN      SOA     users.cipher.com. root.users.cipher. (
-                            2020102001      ; Serial
-                            3600            ; Refresh
-                            1800            ; Retry
-                            604800          ; Expire
-                            86400 )         ; Minimum TTL
-    ;
-    @       IN      NS      users.cipher.
+$TTL 86400
+@       IN      SOA     users.cipher.com. root.users.cipher. (
+                        2020102001      ; Serial
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Minimum TTL
+;
+@       IN      NS      users.cipher.
 EOL
 
 #ajouter les directives au fichier interfaces
     cat > /etc/network/interfaces << 'EOL'
-    iface enp1s0 inet static
-    address 192.168.1.6
-    netmask 255.255.255.0
-    dns-nameservers 192.168.1.6
+iface enp1s0 inet static
+address 192.168.1.6
+netmask 255.255.255.0
+dns-nameservers 192.168.1.6
 EOL
 
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
-    

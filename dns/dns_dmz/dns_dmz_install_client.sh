@@ -33,11 +33,11 @@ interfacesFile="/etc/network/interfaces"
         else
         #ajouter à la fin du document les lignes suivantes
         cat > $interface << 'EOF'
-        auto enp1s0
-        iface enp1s0 inet static
-        address 192.168.0.4
-        netmask 255.255.255.0
-        gateway 192.168.0.0
+auto enp1s0
+iface enp1s0 inet static
+address 192.168.0.4
+netmask 255.255.255.0
+gateway 192.168.0.0
 EOF
         fi
     fi
