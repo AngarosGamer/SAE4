@@ -16,6 +16,7 @@ fi
     sed -i 's/INTERFACESv4=""/INTERFACESv4="enp1s0"/g' /etc/default/isc-dhcp-server
 
 #Replacer le fichier de configuration par celui present dans le dossier dhcp
+    wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf
     rm /etc/dhcp/dhcpd.conf
     cp dhcpd.conf /etc/dhcp/dhcpd.conf
 

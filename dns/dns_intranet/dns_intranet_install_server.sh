@@ -77,3 +77,4 @@ EOL
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
+    
