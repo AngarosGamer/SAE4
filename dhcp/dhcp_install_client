@@ -2,22 +2,34 @@
 
 #Lancer ce script en root
 #Si l'utilisateur lancant le script n'est pas root, cela affichera un message d'erreur 
-if [ $(id -u) -ne 0 ]
-then 
-   echo "Ce script doit être lancé en tant que root"
+if [[ $EUID -ne 0 ]]; then
+   echo "Ce script doit être lancé en tant que root" 
    exit 1
 fi
-if [ "$#" -ne 1 ]
+
+if ! dpkg -s isc-dhcp-client > /dev/null 2>&1
 then
-   echo "Il faut renseigner l'argument suivant : l'adresse de la machine"
-	echo "Exemple de commande :"
-   echo "./dhcp_install_client client"
-else
-   #Réécriture du fichier de configuration des interfaces réseau
-   cat > /etc/network/interfaces << 'EOL'
-   # This file describes the network interfaces available on your system
-   iface eth0 inet dhcp
-
-
-EOL
+   echo "Installation du paquet isc-dhcp-client"
+   apt -y install isc-dhcp-client
 fi
+
+#if [ $# -eq 1 ]
+#then
+   #Réécriture du fichier de configuration des interfaces réseau
+   #sed -i '$a\# This file describes the network interfaces available on your system\nauto enp1s0\niface enp1s0 inet dhcp' "/etc/network/interfaces"    
+#else
+   #Réécriture du fichier de configuration des interfaces réseau   
+sed -i '$a\# This file describes the network interfaces available on your system\nauto enp1s0\niface enp1s0 inet dhcp' "/etc/network/interfaces"
+#fi
+
+#Redémarrage du service networking
+systemctl restart networking.service
+
+#quelle difference entre faire ifdown enp1s0 && ifup enp1s0 ??
+#personnalisation du script si installion de servers ??
+# cat > /etc/network/interfaces << 'EOL'
+#auto enp1s0
+#iface enp1s0 inet static
+#address 192.168.0.3
+#netmask 255.255.255.0
+#gateway 192.168.0.2

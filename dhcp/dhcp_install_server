@@ -5,71 +5,23 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#Mettre à jour la liste des paquets
-apt -y update
-apt -y upgrade
-
 #Installe des paquets isc-dhcp-server
-apt -y install isc-dhcp-server
+    apt -y install isc-dhcp-server
 
 #Modifier
-sed -i 's/INTERFACESv4=""/INTERFACESv4="eth0"/g' /etc/default/isc-dhcp-server
+    sed -i 's/INTERFACESv4=""/INTERFACESv4="enp1s0"/g' /etc/default/isc-dhcp-server
 
-#Modifier le fichier de configuration
-cat > /etc/dhcp/dhcpd.conf << 'EOL'
-#dhcpd.conf
-default-lease-time 600;
-max-lease-time 7200;
-authorative;
-#option subnet-mask 255.255.255.0;
-option domain-name "cipher.com";
-option domain-name-servers 192.168.128.7;
+#Replacer le fichier de configuration par celui present dans le dossier dhcp
+    wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf
+    rm /etc/dhcp/dhcpd.conf
+    cp dhcpd.conf /etc/dhcp/dhcpd.conf
 
-# Subnet pour les postes de travail
-subnet 192.168.128.0 netmask 255.255.255.0 {
-    range 192.168.128.2 192.168.128.23;
-    option routers 192.168.128.1;postgress_server68.128.255;
-};
-
-#Subnet pour la DMZ
-subnet 192.168.1.0 netmask 255.255.255.0 {
-    range 192.168.0.2 192.168.0.4;
-    option routers 192.168.0.1;
-    option broadcast-address 192.168.0.254;
-}
-
-#Subnet pour les serveurs
-#separé des serveur, malgré le même router ?
-subnet 192.168.128.0 netmask 255.255.255.0 {
-    range 192.168.128.23 192.168.128.253;
-    option routers 192.168.128.1;
-    option broadcast-address 192.168.128.254;
-}
-
-host ldap_server{
-    #remplacer ethernet addresses
-    hardware ethernet 08:00:06:21:c1:a2;
-    fixed-address ldap.cipher.com;
-}
-
-host log_server{
-    #remplacer ethernet addresses
-    hardware ethernet 08:00:06:21:c1:a2;
-    fixed-address log.cipher.com;
-}
-
-host postgress_server{
-    #remplacer ethernet addresses
-    hardware ethernet 08:00:06:21:c1:a2;
-    fixed-address postgress.cipher.com;
-}
-
-
-
-EOL
+#modifier le fichier dhclient.conf pour prendre en compte le serveur dns
+#prévoir une version dmz ??
+    sed -i 's/#prepend domain-name-servers 127.0.0.1;/prepend domain-name-servers 192.168.1.6;/g' /etc/dhcp/dhclient.conf
 
 #Redemarrer le service
-service udhcpd restart
+    systemctl restart isc-dhcp-server.service
 
 #Ajouter le script au démarrage
-echo "service udhcpd restart" >> /etc/rc.local
+    #echo "service udhcpd restart" >> /etc/rc.local
