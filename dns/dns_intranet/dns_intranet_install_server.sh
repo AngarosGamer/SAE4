@@ -28,7 +28,7 @@ zone "servers.cipher" {
     file "/etc/bind/db.servers.cipher.";
 };
 EOL
-
+echo "named.conf.local complété"
 #fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
 #fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
 

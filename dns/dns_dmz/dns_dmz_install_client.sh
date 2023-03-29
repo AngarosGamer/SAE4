@@ -39,6 +39,7 @@ address 192.168.0.4
 netmask 255.255.255.0
 gateway 192.168.0.0
 EOF
+echo "recréation du fichier interfaces"
         fi
     fi
 
