@@ -13,28 +13,28 @@ interfacesFile="/etc/network/interfaces"
     sed -i '$a\nameserver 192.168.0.4' $resolvFile
 
 #vérifier les paramètres réseau
-    ip addr add 192.168.0.4 dev eth1
+    ip addr add 192.168.0.4 dev enp1s0
     ip route add default via 192.168.0.4
 
 #ajouter le nom du serveur DNS dans /interfaces
-#verification si la ligne "iface eth0 inet static" est présente
-    if grep 'auto eth1' "$interfacesFile"; then
-        if grep 'iface eth1 inet static' "$interfacesFile"; then
-        sed -i 'iface eth1 inet static/a    dns-nameservers 192.168.0.4' $interfacesFile
+#verification si la ligne "iface enp1s0 inet static" est présente
+    if grep 'auto enp1s0' "$interfacesFile"; then
+        if grep 'iface enp1s0 inet static' "$interfacesFile"; then
+        sed -i 'iface enp1s0 inet static/a    dns-nameservers 192.168.0.4' $interfacesFile
         else
-        sed -i '$a\auto eth1\niface eth0 inet static\n    dns-nameservers 192.168.0.4' $interfacesFile
+        sed -i '$a\auto enp1s0\niface enp1s0 inet static\n    dns-nameservers 192.168.0.4' $interfacesFile
         fi
     else
-        if grep 'iface eth1 inet static' "$interfacesFile"; then
-        #remplacer la ligne avant 'iface eth0 inet static' par 'auto eth1'
-        sed 'iface eth1 inet static/ i\auto eth1' $interfacesFile
-        sed -i 'iface eth1 inet static/a    dns-nameservers 192.168.0.4' $interfacesFile
-        #ajouter la ligne 'iface eth0 inet static' après 'auto eth1'
+        if grep 'iface enp1s0 inet static' "$interfacesFile"; then
+        #remplacer la ligne avant 'iface enp1s0 inet static' par 'auto enp1s0'
+        sed 'iface enp1s0 inet static/ i\auto enp1s0' $interfacesFile
+        sed -i 'iface enp1s0 inet static/a    dns-nameservers 192.168.0.4' $interfacesFile
+        #ajouter la ligne 'iface enp1s0 inet static' après 'auto enp1s0'
         else
         #ajouter à la fin du document les lignes suivantes
         cat > $interface << 'EOF'
-        auto eth1
-        iface eth1 inet static
+        auto enp1s0
+        iface enp1s0 inet static
         address 192.168.0.4
         netmask 255.255.255.0
         gateway 192.168.0.0

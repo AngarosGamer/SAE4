@@ -134,7 +134,7 @@ EOL
 
 #ajouter les directives au fichier interfaces
     cat > /etc/network/interfaces << 'EOL'
-    iface eth1 inet static
+    iface enp1s0 inet static
     address 192.168.0.4
     netmask 255.255.255.0
     dns-nameservers 192.168.0.4
@@ -143,4 +143,4 @@ EOL
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
-    ifdown eth1 && ifup eth1
+    ifdown enp1s0 && ifup enp1s0

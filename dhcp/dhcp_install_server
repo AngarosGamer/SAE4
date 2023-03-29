@@ -13,7 +13,7 @@ fi
     apt -y install isc-dhcp-server
 
 #Modifier
-    sed -i 's/INTERFACESv4=""/INTERFACESv4="eth0"/g' /etc/default/isc-dhcp-server
+    sed -i 's/INTERFACESv4=""/INTERFACESv4="enp1s0"/g' /etc/default/isc-dhcp-server
 
 #Replacer le fichier de configuration par celui present dans le dossier dhcp
     rm /etc/dhcp/dhcpd.conf

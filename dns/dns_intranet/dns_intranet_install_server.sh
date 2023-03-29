@@ -6,11 +6,10 @@
     fi
 
 #installe les packages bind9
-    apt -y update
+    apt update
     apt -y install bind9
 
 #verifie si bind9 est installé
-#NOT WORKING
     if ! which bind9 > /dev/null; then
     echo -e "bind9 packages not installed, please advise your system administrator".
     fi
@@ -69,7 +68,7 @@ EOL
 
 #ajouter les directives au fichier interfaces
     cat > /etc/network/interfaces << 'EOL'
-    iface eth1 inet static
+    iface enp1s0 inet static
     address 192.168.1.6
     netmask 255.255.255.0
     dns-nameservers 192.168.1.6
@@ -78,5 +77,3 @@ EOL
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
-    #NOT WORKING (eth1 not configured)
-    ifdown eth1 && ifup eth1
