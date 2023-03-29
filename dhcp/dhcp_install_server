@@ -5,10 +5,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#Mettre à jour la liste des paquets
-    apt -y update
-    apt -y upgrade
-
 #Installe des paquets isc-dhcp-server
     apt -y install isc-dhcp-server
 

@@ -2,9 +2,8 @@
 
 #Lancer ce script en root
 #Si l'utilisateur lancant le script n'est pas root, cela affichera un message d'erreur 
-if [ $(id -u) -ne 0 ]
-then 
-   echo "Ce script doit être lancé en tant que root"
+if [[ $EUID -ne 0 ]]; then
+   echo "Ce script doit être lancé en tant que root" 
    exit 1
 fi
 
