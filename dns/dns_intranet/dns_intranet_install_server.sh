@@ -10,6 +10,7 @@
     apt -y install bind9
 
 #verifie si bind9 est installé
+#NOT WORKING
     if ! which bind9 > /dev/null; then
     echo -e "bind9 packages not installed, please advise your system administrator".
     fi
@@ -77,4 +78,5 @@ EOL
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
+    #NOT WORKING (eth1 not configured)
     ifdown eth1 && ifup eth1
