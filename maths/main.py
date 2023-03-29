@@ -260,105 +260,93 @@ def print_serveurs_taches(links, size_serveurs): # Fonction qui affiche les lien
         else: # Sinon, on affiche le lien sur un serveur réel
             print("Le serveur "+ str(int(link[0])) + " prend la tache " + str(int(link[1])) + " avec un temps de " + str(int(matrice[int(link[0])][int(link[1])])))
 
-ERR = False
-count = 1
-while not ERR:
-    # Sélection de méthode
-    #type = int(input("Quelle méthode voulez-vous :\n 1) Matrice auto-générée\n 2) Matrice de lien serveurs - tâches\n 3) Matrice pré-configurée\nChoisissez avec le nombre précédant la commande\n"))
-    type = 2
-    if type == 1: # Cas ou la matrice est auto-générée aléatoirement en fonction de la taille voulue et de l'intervalle de valeurs
-        serveur_count = int(input("Quelle est la taille horizontale de la matrice que vous voulez (entrez un nombre) : "))
-        taches_count = int(input("Quelle est la taille verticale de la matrice que vous voulez (entrez un nombre) : "))
-        intervalle = int(input("Quelle est le nombre maximal dans la matrice (entrez un nombre) : "))
-        matrice = generate_auto_matrix(serveur_count, taches_count, intervalle)
-        print("La matrice auto-générée est : \n" + str(matrice))
-    elif type == 2: # Cas ou la matrice est générée en fonction des valeurs entrées par l'utilisateur pour chaque serveur et chaque tâche
-        serveurs = []
-        #serveur_count = int(input("Combien y a-t-il de serveurs (entrez un nombre N >= 1) ? \n"))
-        #for i in range(0, serveur_count):
-        #   valeur = int(input("Valeur du serveur "+ str(i) +" : "))
-        #   while valeur <= 0:
-        #       print("La valeur doit être comprise entre 1 et N >= 1")
-        #       valeur = int(input("Valeur du serveur "+ str(i) +" : "))
-        #   serveurs.append(valeur)
-        taches = []
-        #taches_count = int(input("Combien y a-t-il de tâches (entrez un nombre N >= 1) ? \n"))
-        #for i in range(0, taches_count):
-        #    valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
-        #    while valeur <= 0:
-        #        print("La valeur doit être comprise entre 1 et N >= 1")
-        #        valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
-        #    taches.append(valeur)
-        for i in range(7):
-            serveurs.append(random.randint(1, 80000))
-        for i in range(10):
-            taches.append(random.randint(1, 80000))
-        matrice = make_matrice(serveurs, taches)
-        #print("La matrice liée tâches-serveurs est : \n" + str(matrice))
-    else: # Cas ou la matrice est pré-configurée
-        matrice = np.array([
-            [100, 300, 140, 250, 120,  90,  40, 120, 130, 170],
-            [ 50, 150,  70, 125,  60,  45,  20,  60,  65,  85],
-            [ 70, 210,  98, 175,  84,  63,  28,  84,  91, 119],
-            [150, 450, 210, 375, 180, 135,  60, 180, 195, 255],
-            [ 60, 180,  84, 150,  72,  54,  24,  72,  78, 102],
-            [ 90, 270, 126, 225, 108,  81,  36, 108, 117, 153]
-        ])
+# Sélection de méthode
+type = int(input("Quelle méthode voulez-vous :\n 1) Matrice auto-générée\n 2) Matrice de lien serveurs - tâches\n 3) Matrice pré-configurée\nChoisissez avec le nombre précédant la commande\n"))
+if type == 1: # Cas ou la matrice est auto-générée aléatoirement en fonction de la taille voulue et de l'intervalle de valeurs
+    serveur_count = int(input("Quelle est la taille horizontale de la matrice que vous voulez (entrez un nombre) : "))
+    taches_count = int(input("Quelle est la taille verticale de la matrice que vous voulez (entrez un nombre) : "))
+    intervalle = int(input("Quelle est le nombre maximal dans la matrice (entrez un nombre) : "))
+    matrice = generate_auto_matrix(serveur_count, taches_count, intervalle)
+    print("La matrice auto-générée est : \n" + str(matrice))
+elif type == 2: # Cas ou la matrice est générée en fonction des valeurs entrées par l'utilisateur pour chaque serveur et chaque tâche
+    serveurs = []
+    serveur_count = int(input("Combien y a-t-il de serveurs (entrez un nombre N >= 1) ? \n"))
+    for i in range(0, serveur_count):
+       valeur = int(input("Valeur du serveur "+ str(i) +" : "))
+       while valeur <= 0:
+           print("La valeur doit être comprise entre 1 et N >= 1")
+           valeur = int(input("Valeur du serveur "+ str(i) +" : "))
+       serveurs.append(valeur)
+    taches = []
+    taches_count = int(input("Combien y a-t-il de tâches (entrez un nombre N >= 1) ? \n"))
+    for i in range(0, taches_count):
+        valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
+        while valeur <= 0:
+            print("La valeur doit être comprise entre 1 et N >= 1")
+            valeur = int(input("Valeur de la tâche "+ str(i) +" : "))
+        taches.append(valeur)
+    for i in range(serveur_count):
+        serveurs.append(random.randint(1, 80000))
+    for i in range(taches_count):
+        taches.append(random.randint(1, 80000))
+    matrice = make_matrice(serveurs, taches)
+    #print("La matrice liée tâches-serveurs est : \n" + str(matrice))
+else: # Cas ou la matrice est pré-configurée
+    matrice = np.array([
+        [100, 300, 140, 250, 120,  90,  40, 120, 130, 170],
+        [ 50, 150,  70, 125,  60,  45,  20,  60,  65,  85],
+        [ 70, 210,  98, 175,  84,  63,  28,  84,  91, 119],
+        [150, 450, 210, 375, 180, 135,  60, 180, 195, 255],
+        [ 60, 180,  84, 150,  72,  54,  24,  72,  78, 102],
+        [ 90, 270, 126, 225, 108,  81,  36, 108, 117, 153]
+    ])
 
-    # Sélection de mode d'affichage
-    #mode = int(input("Voulez-vous le mode :\n 1) Pas à pas (arrêt entre chaque opération)\n 2) Résultat (calcul direct du résultat)\nChoisissez avec le nombre précédant la commande\n"))
-    mode = 2
-    matrice = soustraction_colonne(soustraction_ligne(matrice))
+# Sélection de mode d'affichage
+mode = int(input("Voulez-vous le mode :\n 1) Pas à pas (arrêt entre chaque opération)\n 2) Résultat (calcul direct du résultat)\nChoisissez avec le nombre précédant la commande\n"))
+matrice = soustraction_colonne(soustraction_ligne(matrice))
+if (mode == 1):
+    print("Après soustraction en lignes et colonnes, la matrice est : \n" + str(matrice))
+    input("Appuyez sur entrer pour continuer\n\n")
+
+zero_encadres, zero_barres = encadrer_zeros(matrice)
+if (mode == 1):
+    print("Les zéros encadrés : " + str(zero_encadres))
+    print("Les zéros barrés : " + str(zero_barres))
+    input("Appuyez sur entrer pour continuer\n\n")
+
+
+lignes_marquees = marquer_lignes_sans_zero_encadre(matrice, zero_encadres)
+change = True
+lignes_marquees_before = []
+colonnes_marquees_before = []
+while change:
+    colonnes_marquees = []
+
+    colonnes_marquees = marquer_colonnes_avec_zero_barre_sur_ligne_marquee(zero_barres, lignes_marquees, colonnes_marquees)
     if (mode == 1):
-        print("Après soustraction en lignes et colonnes, la matrice est : \n" + str(matrice))
-        input("Appuyez sur entrer pour continuer\n\n")
-
-    zero_encadres, zero_barres = encadrer_zeros(matrice)
-    if (mode == 1):
-        print("Les zéros encadrés : " + str(zero_encadres))
-        print("Les zéros barrés : " + str(zero_barres))
-        input("Appuyez sur entrer pour continuer\n\n")
-
-
-    lignes_marquees = marquer_lignes_sans_zero_encadre(matrice, zero_encadres)
-    change = True
-    lignes_marquees_before = []
-    colonnes_marquees_before = []
-    while change:
-        colonnes_marquees = []
-
-        colonnes_marquees = marquer_colonnes_avec_zero_barre_sur_ligne_marquee(zero_barres, lignes_marquees, colonnes_marquees)
-        if (mode == 1):
-            print("Les colonnes marquées : " + str(colonnes_marquees))
-            input("Appuyez sur entrer pour continuer\n\n")
-
-
-        lignes_marquees = marquer_lignes_avec_zero_encadre_sur_colonnes_marquee(zero_encadres, colonnes_marquees, lignes_marquees)
-        if (mode == 1):
-            print("Les lignes marquées : " + str(lignes_marquees))
-            input("Appuyez sur entrer pour continuer\n\n")
-    
-        if (len(lignes_marquees_before) == len(lignes_marquees)) and (len(colonnes_marquees_before) == len(colonnes_marquees)):
-            change = False
-        else:
-            lignes_marquees_before = lignes_marquees.copy()
-            colonnes_marquees_before = colonnes_marquees.copy()
-
-    colonnes_grisees, lignes_grisees = griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice)
-    if (mode == 1):
-        print("Les colonnes grisées : " + str(colonnes_grisees))
-        print("Les lignes grisées : " + str(lignes_grisees))
+        print("Les colonnes marquées : " + str(colonnes_marquees))
         input("Appuyez sur entrer pour continuer\n\n")
 
 
-    matrice_finale = soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees)
-    #print("La matrice finale : \n" + str(matrice_finale))
-    links = choose_serveurs_taches(matrice_finale)
-    if (len(links) != 10 or len(links) != 10):
-            print(str(links) + " : \n" + str(matrice_finale))
-            print_serveurs_taches(links, 7)
-            print("Erreur : le nombre de serveurs et de tâches ne correspond pas à la matrice " + str(count))
-            input()
-    print("Réussite de la matrice " + str(count))
-    count += 1
-    #print_serveurs_taches(links, 7)
+    lignes_marquees = marquer_lignes_avec_zero_encadre_sur_colonnes_marquee(zero_encadres, colonnes_marquees, lignes_marquees)
+    if (mode == 1):
+        print("Les lignes marquées : " + str(lignes_marquees))
+        input("Appuyez sur entrer pour continuer\n\n")
+
+    if (len(lignes_marquees_before) == len(lignes_marquees)) and (len(colonnes_marquees_before) == len(colonnes_marquees)):
+        change = False
+    else:
+        lignes_marquees_before = lignes_marquees.copy()
+        colonnes_marquees_before = colonnes_marquees.copy()
+
+colonnes_grisees, lignes_grisees = griser_les_lignes_et_colonnes(lignes_marquees, colonnes_marquees, matrice)
+if (mode == 1):
+    print("Les colonnes grisées : " + str(colonnes_grisees))
+    print("Les lignes grisées : " + str(lignes_grisees))
+    input("Appuyez sur entrer pour continuer\n\n")
+
+
+matrice_finale = soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees)
+print("La matrice finale : \n" + str(matrice_finale))
+links = choose_serveurs_taches(matrice_finale)
+print_serveurs_taches(links, serveur_count)
