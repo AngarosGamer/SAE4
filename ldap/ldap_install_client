@@ -13,7 +13,7 @@ apt -y install  libpam-ldapd libnss-ldapd ldap-utils nslcd
 # Dans la configuration, choisir :
   #LDAP server:	ldap:///192.168.1.7	(not the default)
   #Distinguished name base:	dc=cipher,dc=com	(not the default)
-  #Pas de service à configurer donc -> OK
+  #Activer le password, shadow et group
 
 
 #Indication de créer le homedir directement quand on se connecte
@@ -22,12 +22,12 @@ session optional        pam_mkhomedir.so skel=/etc/skel umask=077
 EOF
 
 #Accepter d'overwrite les changements si une fenetre s'ouvre
-
+ 
 # Authentification par LDAP dans le service PAM
 pam-auth-update
 #Activer "Create home directory on login" en utilisant "espace"
 
-
-
+systemctl restart nslcd
+systemctl restart nscd
 # Reboot pour sauvegarder les changements
 reboot

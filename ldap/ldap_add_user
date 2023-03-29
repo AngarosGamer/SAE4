@@ -15,7 +15,7 @@ fi
 
 #Creation du fichier ldif pour la création d'un utilisateur
 cat << EOF > "$1.ldif"
-dn: uid=$1,ou=users,dc=cipher,dc=com
+dn: cn=$1,ou=Personnes,dc=cipher,dc=com
 objectClass: top
 objectClass: account
 objectClass: posixAccount
@@ -27,11 +27,11 @@ gidNumber: $3
 homeDirectory: /home/$1
 loginShell: /bin/bash
 gecos: $1
-userPassword: {crypt}x
+userPassword: $1
 shadowLastChange: 0
 shadowMax: 0
 shadowWarning: 0
 EOF
 
-ldapadd -x -W -D "cn=ramesh,dc=cipher,dc=com" -f $1.ldif
+ldapadd -x -W -D "cn=admin,dc=cipher,dc=com" -f $1.ldif
 fi
