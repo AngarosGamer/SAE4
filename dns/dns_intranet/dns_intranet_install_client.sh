@@ -27,7 +27,7 @@ interfacesFile="/etc/network/interfaces"
         #ajouter la ligne 'iface enp1s0 inet static' après 'auto enp1s0'
         else
         #ajouter à la fin du document les lignes suivantes
-        cat > $interface << 'EOF'
+        cat > "$interfacesFile" << 'EOF'
 auto enp1s0
 iface enp1s0 inet dhcp
 address 192.168.0.4
