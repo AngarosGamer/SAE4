@@ -29,9 +29,12 @@ loginShell: /bin/bash
 gecos: $1
 userPassword: $1
 shadowLastChange: 0
-shadowMax: 0
+shadowMax: -1
 shadowWarning: 0
 EOF
 
 ldapadd -x -W -D "cn=admin,dc=cipher,dc=com" -f $1.ldif
 fi
+
+#Après s'être connecté une premiere fois avec le mot de passe de base qui est son login,
+#l'utilisateur sera invité à changer son mot de passe et à se reconnecter
