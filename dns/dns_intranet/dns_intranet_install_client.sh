@@ -27,7 +27,7 @@ interfacesFile="/etc/network/interfaces"
         #ajouter la ligne 'iface enp1s0 inet static' après 'auto enp1s0'
         else
         #ajouter à la fin du document les lignes suivantes
-        cat > $interface << 'EOF'
+        cat > "$interfacesFile" << 'EOF'
 auto enp1s0
 iface enp1s0 inet dhcp
 address 192.168.0.4
@@ -43,4 +43,4 @@ echo "recréation du fichier interfaces"
 text="127.0.0.1     dns.cipher."
 #text2="192.168.0.128    dns.cipher.intra"
 
-sed -i '2i' "$text" /etc/hosts
+sed -i "2i $text" /etc/hosts
