@@ -11,17 +11,10 @@ apt update
 apt -y install  libpam-ldapd libnss-ldapd ldap-utils nslcd
 
 # Dans la configuration, choisir :
-  #LDAP server:	ldap:///192.168.1.7	(not the default)
+  #LDAP server:	ldap://192.168.1.7/	(not the default)
   #Distinguished name base:	dc=cipher,dc=com	(not the default)
-  #Activer le password, shadow et group
+  #Activer le password, shadow et group grâce à la barre espace
 
-
-#Indication de créer le homedir directement quand on se connecte
-cat > /etc/pam.d/common-session << 'EOF'
-session optional        pam_mkhomedir.so skel=/etc/skel umask=077
-EOF
-
-#Accepter d'overwrite les changements si une fenetre s'ouvre
  
 # Authentification par LDAP dans le service PAM
 pam-auth-update

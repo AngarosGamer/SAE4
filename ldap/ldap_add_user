@@ -31,8 +31,10 @@ userPassword: $1
 shadowLastChange: 0
 shadowMax: -1
 shadowWarning: 0
+
 EOF
 
+#Ajout de l'utilisateur, le mot de passe de l'admin sera requis
 ldapadd -x -W -D "cn=admin,dc=cipher,dc=com" -f $1.ldif
 fi
 
