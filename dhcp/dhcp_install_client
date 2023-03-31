@@ -13,23 +13,15 @@ then
    apt -y install isc-dhcp-client
 fi
 
-#if [ $# -eq 1 ]
-#then
-   #Réécriture du fichier de configuration des interfaces réseau
-   #sed -i '$a\# This file describes the network interfaces available on your system\nauto enp1s0\niface enp1s0 inet dhcp' "/etc/network/interfaces"    
-#else
-   #Réécriture du fichier de configuration des interfaces réseau   
-sed -i '$a\# This file describes the network interfaces available on your system\nauto enp1s0\niface enp1s0 inet dhcp' "/etc/network/interfaces"
-#fi
+#reecrire le fichier interfaces
+cat > /etc/network/interfaces << 'EOF'
+auto lo
+iface lo inet loopback
+
+auto enp1s0
+iface enp1s0 inet dhcp
+EOF
+
 
 #Redémarrage du service networking
 systemctl restart networking.service
-
-#quelle difference entre faire ifdown enp1s0 && ifup enp1s0 ??
-#personnalisation du script si installion de servers ??
-# cat > /etc/network/interfaces << 'EOL'
-#auto enp1s0
-#iface enp1s0 inet static
-#address 192.168.0.3
-#netmask 255.255.255.0
-#gateway 192.168.0.2
