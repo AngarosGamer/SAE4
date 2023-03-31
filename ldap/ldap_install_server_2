@@ -4,29 +4,31 @@
 #Si l'utilisateur lancant le script n'est pas root, cela affichera un message d'erreur 
 if [ "$(id -u)" -ne 0 ]
 then 
-   echo "Ce script doit être lancé en tant que root"
+   echo "Ce script doit etre lancé en tant que root"
    exit 1
 fi
 
 # General
 apt -y update
 apt -y upgrade
-mkdir LDAP
-cd LDAP
 
-
-#Installatin des packets slapd nécessaire
-#Saisi du mot de passe administrateur pas nécessaire dans l'interface graphique puis selectionner "OK" pour les service qui ont besoin de redemarrer à chaque fois que la fenetre apparait
+#Installation des packets nécessaire
+apt -y install 
+#Saisi du mot de passe administrateur pas nécessaire dans l'interface graphique puis sélectionner "OK" 
 apt -y install slapd
 
 #Utilisation de l'outil de configuration debconf pour reconfigurer slapd
 dpkg-reconfigure slapd
-  #Selectionner "NO" pour pouvoir utiliser l'outil de reconfiguration
+      ############################
+      ## Configuration de slapd ##
+      ############################
+
+  #Selectionner "NON" pour pouvoir utiliser l'outil de reconfiguration
   #Pour le DNS, saisissez votre nom de domaine. e.g : cipher.com
   #Pour nom d’organisation votre nom d'entreprise. e.g : cipher
   #Entrez ensuite votre mot de passe administrateur
-  #Choisissez no pour la suppression de la base de donné avec le package slapd
-
+  #Choisissez non pour la suppression de la base de donnee avec le package slapd
+  #Choisissez oui pour deplacer les anciens fichiers de bases de données
 
       ###############
       ##   LOG     ##
@@ -34,7 +36,7 @@ dpkg-reconfigure slapd
 
 #Modification du niveau de log que le serveur génère (de base il n'en génère aucun)
 #Creer un fichier logLevel.ldif qui indique de changer le niveau de log à "stats" (le niveau conseillé pour le debbogage)
-touch logLevel.ldif
+touch logLevel.ldif 
 cat > logLevel.ldif << 'EOF'
 dn: cn=config
 changeType: modify
@@ -45,7 +47,10 @@ EOF
 ldapmodify -Q -Y EXTERNAL -H ldapi:/// -f logLevel.ldif
 #On indique au daemon de log rsyslog d'avoir un fichier de log séparé pour openldap
 touch /etc/rsyslog.d/10-slapd.conf
-cat local4.* /var/log/slapd.conf >> /etc/rsyslog.d/10-slapd.conf
+cat > /etc/rsyslog.d/10-slapd.conf << 'EOF' 
+local4.* /var/log/slapd.conf
+EOF
+
 #Restart de rsyslog pour appliquer les changements
 systemctl restart rsyslog
 
@@ -71,15 +76,7 @@ dn: ou=Serveurs,dc=cipher,dc=com
 objectclass: organizationalUnit
 ou: Serveurs
 description: serveur de l entreprise
-
-dn: cn=Aurele Dunand,ou=Personnes,dc=cipher,dc=com
-objectclass: inetOrgPerson
-givenName: Aurele
-sn: Dunand
-cn: Aurele Dunand
-uid: dunandau
-userPassword: dunandau
 EOF
 
-#Ajout du fichier de configuration de la structure
+#Ajout du fichier de configuration de la structure, le mot de passe de l'admin est requis
 ldapadd -x -W -D "cn=admin,dc=cipher,dc=com" -H ldap://localhost -f structure.ldif

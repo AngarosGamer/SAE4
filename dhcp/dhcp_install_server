@@ -15,6 +15,7 @@ fi
     wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf
     rm /etc/dhcp/dhcpd.conf
     cp dhcpd.conf /etc/dhcp/dhcpd.conf
+    rm dhcpd.conf
 
 #modifier le fichier dhclient.conf pour prendre en compte le serveur dns
 #prévoir une version dmz ??
