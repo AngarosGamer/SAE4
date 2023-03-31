@@ -48,12 +48,11 @@ $TTL 86400
                         86400 )         ; Minimum TTL
 ;
 @       IN      NS      servers.cipher.
-sgbd      IN      A     192.168.1.3
+postgres      IN      A     192.168.1.3
 log       IN      A     192.168.1.4
 files     IN      A     192.168.1.5
 dns       IN      A     192.168.1.6
 ldap      IN      A     192.168.1.7
-dhcp      IN      A     192.168.1.8
 kerberos  IN      A     192.168.1.9
 
 EOL
@@ -69,6 +68,7 @@ $TTL 86400
                         86400 )         ; Minimum TTL
 ;
 @       IN      NS      users.cipher.
+dhcp      IN      A     192.168.2.253
 EOL
 echo "Fichier db.users.cipher. créé"
 #ajouter les directives au fichier interfaces
@@ -79,6 +79,10 @@ netmask 255.255.255.0
 dns-nameservers 192.168.1.6
 EOL
 echo "Fichier interfaces modifié"
+
+#modifier le fichier named pour etre en ipv4
+    sed -i 's/OPTIONS="-u bind"/OPTIONS="-u bind -4"/g' /etc/default/named
+
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
