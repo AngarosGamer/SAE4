@@ -1,8 +1,10 @@
 #!/usr/sbin/nft -f
 
-# Script à executer sur le routeur principal de l'infrastrucutre, se charge de diriger le traffic entre les machines de l'infrastructure.
+# Script à executer sur le routeur principal de l'infrastrucutre, se charge de créer les règles dictant les choix sur les connexions transitant par ce routeur.
 # Se référer au script firewall_rules_input pour les règles d'entrée directement sur le routeur lui-même.
-# Se charge de diriger le traffic entre les postes de travail et les serveurs différents
+
+# Il est recommandé d'utiliser le script main_firewall.sh (qui appelle ce script) pour configurer le firewall
+
 
 # Règles serveur Kerberos
 add rule filter forward udp dport 88 ip daddr 192.168.1.9 ip saddr 192.168.0.0/22 ct state new accept
@@ -11,7 +13,7 @@ add rule filter forward udp dport 88 ip daddr 192.168.0.0/22 ip saddr 192.168.1.
 
 # Règles serveur DHCP
 add rule filter forward udp dport 67 ip daddr 192.168.1.8 ip saddr 192.168.0.0/22 ct state new accept
-add rule filter forward tcp dport 68 ip daddr 192.168.1.8 ip saddr 192.168.0.0/22 ct state new accept 
+add rule filter forward tcp dport 68 ip daddr 192.168.1.8 ip saddr 192.168.0.0/22 ct state new accept
 
 # Règles serveur LDAP
 add rule filter forward tcp dport 636 ip daddr 192.168.1.7 ip saddr 192.168.0.0/22 ct state new accept
