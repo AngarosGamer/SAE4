@@ -23,8 +23,8 @@ apt install default-jdk
 # Réinitialiser le firewall
 source ./firewall_reset
 
-# Règles de sortie
-source ./firewall_rules_output
+# Règles de forward
+source ./firewall_rules_forward
 
 # Règles d'entrée
 source ./firewall_rules_input
