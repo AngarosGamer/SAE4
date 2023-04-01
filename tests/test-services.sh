@@ -25,3 +25,12 @@ if [ "$(dhcping -c 192.168.1.2 -s 192.168.1.8 -h "$mac")" ]; then
 else
     echo "Pas de réponse de 192.168.1.8 - service DHCP semble en panne"
 fi
+
+echo "Test d'accès à un compte du LDAP sur la machine poste-4"
+
+ssh -q -o BatchMode=yes $userldap1@$192.168.2.4 "echo Connection successful" >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+  echo "L'accès SSH à $userldap1@$192.168.2.4 est disponible"
+else
+  echo "L'accès SSH à $userldap1@$192.168.2.4 n'est pas disponible"
+fi
