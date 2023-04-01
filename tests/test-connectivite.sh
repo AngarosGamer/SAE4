@@ -24,7 +24,7 @@ declare -A machines=(["192.168.0.2"]="dmz-routeur"
 
 for ip in "${!machines[@]}"; do
     if ping -c 1 "$ip" > /dev/null; then
-        printf "%-16s :  est joignable" "$ip" "${machines[$ip]}"
+        printf "%-16s : %-20.20s est joignable" "$ip" "${machines[$ip]}"
     else
         printf "%-16s : %-20.20s n'est pas joignable" "$ip" "${machines[$ip]}"
     fi
