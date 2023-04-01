@@ -13,3 +13,8 @@ table ip filter {
         type filter hook output priority 0; policy accept;
     }
 }
+
+add table filtrage_nat
+add chain filtrage_nat prerouting { type nat hook prerouting priority 0 ; }
+add chain filtrage_nat postrouting { type nat hook postrouting priority 0 ; }
+add rule filtrage_nat postrouting masquerade
