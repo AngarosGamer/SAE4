@@ -3,7 +3,6 @@
 # Test de connectivite
 # Vérifie que les machines sont joignables par ping ICMP
 
-
 declare -A machines=(["192.168.0.2"]="dmz-routeur" 
                     ["192.168.0.3"]="dmz-webserver"
                     ["192.168.0.4"]="dmz-dns"
