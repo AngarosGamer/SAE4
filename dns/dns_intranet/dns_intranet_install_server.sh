@@ -48,12 +48,11 @@ $TTL 86400
                         86400 )         ; Minimum TTL
 ;
 @       IN      NS      servers.cipher.
-sgbd      IN      A     192.168.1.3
+postgres      IN      A     192.168.1.3
 log       IN      A     192.168.1.4
 files     IN      A     192.168.1.5
 dns       IN      A     192.168.1.6
 ldap      IN      A     192.168.1.7
-dhcp      IN      A     192.168.1.8
 kerberos  IN      A     192.168.1.9
 
 EOL
@@ -69,6 +68,7 @@ $TTL 86400
                         86400 )         ; Minimum TTL
 ;
 @       IN      NS      users.cipher.
+dhcp      IN      A     192.168.2.253
 EOL
 echo "Fichier db.users.cipher. créé"
 #ajouter les directives au fichier interfaces

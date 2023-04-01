@@ -27,7 +27,7 @@ dpkg-reconfigure slapd
   #Pour le DNS, saisissez votre nom de domaine. e.g : cipher.com
   #Pour nom d’organisation votre nom d'entreprise. e.g : cipher
   #Entrez ensuite votre mot de passe administrateur
-  #Choisissez non pour la suppression de la base de donnee avec le package slapd
+  #Choisissez non pour la suppression de la base de donnee lors de la purge du package slapd
   #Choisissez oui pour deplacer les anciens fichiers de bases de données
 
       ###############
@@ -76,6 +76,7 @@ dn: ou=Serveurs,dc=cipher,dc=com
 objectclass: organizationalUnit
 ou: Serveurs
 description: serveur de l entreprise
+
 EOF
 
 #Ajout du fichier de configuration de la structure, le mot de passe de l'admin est requis

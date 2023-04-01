@@ -14,30 +14,25 @@ EOF
 
 interfacesFile="/etc/network/interfaces"
     if grep 'auto enp1s0' "$interfacesFile"; then
-        if grep 'iface enp1s0 inet dhcp' "$interfacesFile"; then
-        sed -i 'iface enp1s0 inet dhcp/a    dns-nameservers 192.168.1.6' $interfacesFile
-        else
-        sed -i '$a\auto enp1s0\niface enp1s0 inet dhcp\n    dns-nameservers 192.168.1.6' $interfacesFile
+        if ! grep 'iface enp1s0 inet dhcp' "$interfacesFile"; then
+        sed -i '$a\auto enp1s0\niface enp1s0 inet dhcp' $interfacesFile
         fi
     else
-        if grep 'iface enp1s0 inet dhcp' "$interfacesFile"; then
-        #remplacer la ligne avant 'iface enp1s0 inet static' par 'auto enp1s0'
-        sed 'iface enp1s0 inet dhcp/ i\auto enp1s0' $interfacesFile
-        sed -i 'iface enp1s0 inet dhcp/a    dns-nameservers 192.168.1.6' $interfacesFile
-        #ajouter la ligne 'iface enp1s0 inet static' après 'auto enp1s0'
-        else
-        #ajouter à la fin du document les lignes suivantes
-        cat > "$interfacesFile" << 'EOF'
+        if ! grep 'iface enp1s0 inet dhcp' "$interfacesFile"; then
+       #recreer le document interfaces
+        cat > $interface << 'EOF'
+auto lo
+iface lo inet loopback
+
 auto enp1s0
 iface enp1s0 inet dhcp
-address 192.168.1.6
-netmask 255.255.255.0
-gateway 192.168.1.2
 EOF
 echo "recréation du fichier interfaces"
         fi
     fi
 
+#redémarrer le service network
+systemctl restart networking.service
 
 
 #associer l'adresse IPv4 dans le fichier hosts
