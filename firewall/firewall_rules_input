@@ -6,7 +6,7 @@
 # Règles serveur Kerberos
 add rule filter input udp dport 88 ip daddr 192.168.1.9 ip saddr 192.168.0.0/32 ct state new accept
 add rule filter input tcp dport 88 ip daddr 192.168.1.9 ip saddr 192.168.0.0/32 ct state new accept
-add rule filter input udp dport 88 ip daddr 192.168.0.0/32 ip saddr 192.168.1.9 ct state new accept
+add rule filter input udp dport 88 ip daddr 192.168.0.0/32 ip saddr 192.168.1.10 ct state new accept
 
 # Règles serveur DHCP
 add rule filter input udp dport 67 ip daddr 192.168.1.8 ip saddr 192.168.1.0/17 ct state new accept
@@ -15,8 +15,9 @@ add rule filter input tcp dport 68 ip daddr 192.168.1.8 ip saddr 192.168.1.0/17 
 # Règles serveur LDAP
 add rule filter input tcp dport 636 ip daddr 192.168.1.7 ip saddr 192.168.0.0/32 ct state new accept
 
-# Règles serveur DNS
+# Règles serveurs DNS
 add rule filter intput udp sport dns ip daddr 192.168.1.6 ip saddr 192.168.0.0/32 ct state new accept
+add rule filter intput udp sport dns ip daddr 192.168.0.4 ip saddr 192.168.0.0/32 ct state new accept
 
 # Règles serveur de fichiers
 add rule filter input tcp dport 2049 ip daddr 192.168.1.5 ip saddr 192.168.128.0/17 ct state new accept
@@ -27,6 +28,22 @@ add rule filter input tcp dport http ip daddr 192.168.1.4 ip saddr 192.168.0.0/3
 
 # Règles serveur postgres
 add rule filter input tcp dport 5432 ip daddr 192.168.1.3 ip saddr 192.168.128.0/17 ct state new accept
+
+# Règles serveur web (HTTP et HTTPS)
+add rule filter input tcp dport http ip daddr 192.168.0.3 ip saddr 192.168.0.0/32 limit rate 50 kbytes/second ct state new tcp flags == syn drop
+add rule filter input tcp dport http ip daddr 192.168.0.3 ip saddr 192.168.0.0/32 limit rate over 50 kbytes/second ct state new tcp flags == syn accept
+add rule filter input tcp dport https ip daddr 192.168.0.3 ip saddr 192.168.0.0/32 ct state new tcp flags == syn accept
+
+# Règles pour ICMP
+add rule filter input icmp type echo-request limit rate 10/second accept
+add rule filter input icmp type echo-request limit rate over 10/second drop
+
+# Règles de SSH
+add rule filter inpt tcp dport ssh ip saddr 192.168.0.0/32 ct state new tcp flags syn tcp accept
+
+# Filtre UDP (UDP Flood)
+add rule filter input udp limit rate 10/second accept
+add rule filter input udp limit rate over 10/second drop
 
 add rule filter input ct state established accept # Accepter les connexions établies par défaut
 
