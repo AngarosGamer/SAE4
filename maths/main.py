@@ -297,12 +297,16 @@ elif type == 2: # Cas ou la matrice est générée en fonction des valeurs entr�
     print("La matrice liée tâches-serveurs est : \n" + str(matrice_originale))
 else: # Cas ou la matrice est pré-configurée
     matrice_originale = np.array([
-        [100, 300, 140, 250, 120,  90,  40, 120, 130, 170],
-        [ 50, 150,  70, 125,  60,  45,  20,  60,  65,  85],
-        [ 70, 210,  98, 175,  84,  63,  28,  84,  91, 119],
-        [150, 450, 210, 375, 180, 135,  60, 180, 195, 255],
-        [ 60, 180,  84, 150,  72,  54,  24,  72,  78, 102],
-        [ 90, 270, 126, 225, 108,  81,  36, 108, 117, 153]
+        [6, 4, 7, 7, 0, 1, 5, 0, 3, 7],
+        [0, 6, 6, 3, 4, 0, 2, 2, 8, 9],
+        [2, 8, 2, 3, 9, 3, 1, 5, 7, 0],
+        [5, 6, 8, 0, 7, 7, 0, 3, 1, 3],
+        [3, 0, 3, 7, 8, 4, 6, 1, 1, 7],
+        [6, 4, 0, 7, 8, 1, 3, 4, 0, 7],
+        [0, 4, 0, 7, 3, 1, 7, 4, 6, 8],
+        [8, 1, 8, 0, 6, 4, 0, 6, 4, 3],
+        [0, 3, 0, 4, 5, 6, 4, 1, 8, 9],
+        [7, 9, 7, 2, 0, 0, 3, 5, 5, 2]
     ])
 
 # Sélection de mode d'affichage
@@ -311,7 +315,6 @@ matrice = soustraction_colonne(soustraction_ligne(np.copy(matrice_originale)))
 if (mode == 1):
     print("Après soustraction en lignes et colonnes, la matrice est : \n" + str(matrice))
     input("Appuyez sur entrer pour continuer\n\n")
-
 zero_encadres, zero_barres = encadrer_zeros(matrice)
 if (mode == 1):
     print("Les zéros encadrés : " + str(zero_encadres))
@@ -353,4 +356,4 @@ if (mode == 1):
 matrice_finale = soustraire_min_non_grise(matrice, colonnes_grisees, lignes_grisees, lignes_marquees)
 print("La matrice finale : \n" + str(matrice_finale))
 links = choose_serveurs_taches(matrice_finale)
-print_serveurs_taches(links, serveur_count, matrice_originale)
+print_serveurs_taches(links, 10, matrice_originale)
