@@ -15,13 +15,13 @@ for address in $host; do
     fi
 done
 
-echo "Test du serveur DHCP :"
+printf "\nTest du serveur DHCP :"
 
 mac="$(cat /sys/class/net/enp8s0/address)"
 ip=$(hostname -I)
 
-if [ "$(dhcping -c "$ip" -s 192.168.1.8 -h "$mac")" ]; then
-    echo "Réponse de $ip - service DHCP semble en marche"
+if [ "$(dhcping -c 192.168.1.2 -s 192.168.1.8 -h "$mac")" ]; then
+    echo "Réponse de 192.168.1.8 - service DHCP semble en marche"
 else
-    echo "Pas de réponse de $ip - service DHCP semble en panne"
+    echo "Pas de réponse de 192.168.1.8 - service DHCP semble en panne"
 fi
