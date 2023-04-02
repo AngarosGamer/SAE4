@@ -17,15 +17,23 @@
     if ! which bind9 > /dev/null; then
     echo -e "bind9 packages not installed, please advise your system administrator".
     fi
+
+#réécrire le fichier /etc/bind/named.conf de sorte qu'il ait les bons includes
+    cat > /etc/bind/named.conf << 'EOL'
+include "/etc/bind/named.conf.options"
+include "/etc/bind/named.conf.local"
+include "/etc/bind/named.conf.defaulte-zones"
+EOL
+
 #completer le fichier named.conf.local
     cat > /etc/bind/named.conf.local << 'EOL'
 zone "users.cipher" {
     type master;
-    file "/etc/bind/db.users.cipher.";
+    file "/etc/bind/db.users.cipher";
 };
-zone "servers.cipher" {
+zone "cipher.com" {
     type master;
-    file "/etc/bind/db.servers.cipher.";
+    file "/etc/bind/db.cipher.com";
 };
 EOL
 echo "named.conf.local complété"
@@ -33,42 +41,43 @@ echo "named.conf.local complété"
 #fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
 
 # fichier de zone pour les serveurs 
-    touch /etc/bind/db.servers.cipher.
+    touch /etc/bind/db.cipher.com
 #creer un fichier de zone pour les machines de l'intranet
-    touch /etc/bind/db.users.cipher.
+    touch /etc/bind/db.users.cipher
 
 #remplir le fichier db.servers.cipher.
-    cat > /etc/bind/db.servers.cipher. << 'EOL'
-$TTL 86400
-@       IN      SOA     servers.cipher.com. root.servers.cipher. (
-                        2020102001      ; Serial
-                        3600            ; Refresh
-                        1800            ; Retry
-                        604800          ; Expire
-                        86400 )         ; Minimum TTL
+    cat > /etc/bind/db.cipher.com << 'EOL'
+$TTL 604800
+@       IN      SOA     cipher.com. root.cipher.com. (
+                        3               ; Serial
+                        604800          ; Refresh
+                        86400           ; Retry
+                        2419200         ; Expire
+                        604800 )        ; Minimum TTL
 ;
-@       IN      NS      servers.cipher.
+@       IN      NS      cipher.com.
+@       IN      A       192.168.1.6
 postgres      IN      A     192.168.1.3
-log       IN      A     192.168.1.4
-files     IN      A     192.168.1.5
-dns       IN      A     192.168.1.6
-ldap      IN      A     192.168.1.7
-kerberos  IN      A     192.168.1.9
-
+log           IN      A     192.168.1.4
+files         IN      A     192.168.1.5
+dns           IN      A     192.168.1.6
+ldap          IN      A     192.168.1.7
+kerberos      IN      A     192.168.1.9
+zabbix        IN      A     192.168.1.10
 EOL
-echo "Fichier db.servers.cipher. créé"
+echo "Fichier db.cipher.com créé"
 #remplir le fichier db.users.cipher.
-    cat > /etc/bind/db.users.cipher. << 'EOL'
-$TTL 86400
+    cat > /etc/bind/db.users.cipher << 'EOL'
+$TTL 604800
 @       IN      SOA     users.cipher.com. root.users.cipher. (
-                        2020102001      ; Serial
-                        3600            ; Refresh
-                        1800            ; Retry
-                        604800          ; Expire
-                        86400 )         ; Minimum TTL
+                        2               ; Serial
+                        604800          ; Refresh
+                        86400           ; Retry
+                        2419200         ; Expire
+                        604800 )        ; Minimum TTL
 ;
 @       IN      NS      users.cipher.
-dhcp      IN      A     192.168.2.253
+@       IN      A       192.168.1.6
 EOL
 echo "Fichier db.users.cipher. créé"
 #ajouter les directives au fichier interfaces

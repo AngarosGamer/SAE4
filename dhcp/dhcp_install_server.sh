@@ -18,7 +18,6 @@ fi
     rm dhcpd.conf
 
 #modifier le fichier dhclient.conf pour prendre en compte le serveur dns
-#prévoir une version dmz ??
     sed -i 's/#prepend domain-name-servers 127.0.0.1;/prepend domain-name-servers 192.168.1.6;/g' /etc/dhcp/dhclient.conf
 
 #Redemarrer le service
