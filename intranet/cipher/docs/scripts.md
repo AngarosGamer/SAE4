@@ -45,6 +45,10 @@ Il existe plusieurs scripts pour la mise en place de machines virtuelles :
 ## Kerberos
 
 ## LDAP
+Il existe 3 scripts pour la mise en place du service LDAP, que vous devez installer sur un serveur et un ou des clients : 
+- [`ldap_install_server.sh`](./scripts/ldap/server.md) : Installation du serveur LDAP
+- [`ldap_add_user.sh`](./scripts/ldap/serveur.md) : Ajout d'un utilisateur au LDAP
+- [`ldap_install_client.sh`](./scripts/ldap/client.md) : Installation du client à connecté au LDAP
 
 ## NFS (Serveur de fichiers)
 
