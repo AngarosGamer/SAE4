@@ -30,7 +30,7 @@ systemctl restart networking.service
 
 
 #associer l'adresse IPv4 dans le fichier hosts
-text="192.168.1.6     dns.cipher."
+text="192.168.1.6     dns.cipher.com"
 #text2="192.168.0.128    dns.cipher.intra"
 
 sed -i "2i $text" /etc/hosts
