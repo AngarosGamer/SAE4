@@ -27,7 +27,22 @@ Il y a donc trois scripts pour le DNS :
 - [`dns_intranet_install_client.sh`](./scripts/dns/client.md) : Installation à faire sur une machine cliente
 - [`dns_dmz_install_server.sh`](./scripts/dns/server_dmz.md) : Installation à faire sur le serveur DNS de la DMZ
 
-## Firewall
+## Pare-feu
+
+Le pare-feu permet de filtrer les connexions entrantes et sortantes des machines de l'infrastructure. Il permet de bloquer les connexions entrantes et sortantes non autorisées, et de limiter les connexions sortantes à un certain nombre de connexions par seconde.
+C'est un outil indispensable pour sécuriser l'infrastructure.
+
+Nous avons plusieurs scripts pour le pare-feu, dont un principal permettant de tout mettre en place :
+
+- [`main_firewall.sh`](./scripts/firewall/install.md) : Installation du pare-feu (et toutes les règles associées)
+
+Autres scripts individuels :
+
+- [`firewall_reset.sh`](./scripts/firewall/reset.md) : Réinitialisation du pare-feu
+- [`firewall_rules_forward`](./scripts/firewall/forward.md) : Configuration des règles de paquet transitoires
+- [`firewall_rules_input`](./scripts/firewall/input.md) : Configuration des règles de paquet entrants
+- [`firewall_rules_output`](./scripts/firewall/output.md) : Configuration des règles de paquet sortants
+- [`add_firewall_rule`](./scripts/firewall/add.md) : Ajout d'une règle de pare-feu
 
 ## Machines Virtuelles
 
@@ -43,7 +58,21 @@ Il existe plusieurs scripts pour la mise en place de machines virtuelles :
 
 ## Journalisation
 
+La journalisation permet de stocker les logs des différents services de l'infrastructure. Nous utilisons un serveur de journalisation pour stocker les logs de tous les autres serveurs dans un espace de stockage centralisé.
+
+Il y a deux scripts pour la journalisation :
+
+- [`journald_install_server.sh`](./scripts/journalisation/server.md) : Installation à faire sur le serveur de journalisation
+- [`journald_install_client.sh`](./scripts/journalisation/client.md) : Installation à faire sur une machine cliente
+
 ## Kerberos
+
+Kerberos est un outil de sécurité qui permet d'authentifier les utilisateurs. Il est utilisé pour l'authentification des utilisateurs sur les machines virtuelles, et pour l'authentification des utilisateurs sur les serveurs, et pour NFS.
+
+Nous avons 2 scripts pour le Kerberos :
+
+- [`kerberos-server.sh`](./scripts/kerberos/server.md) : Installation à faire sur le serveur Kerberos
+- [`kerberos-client.sh`](./scripts/kerberos/client.md) : Installation à faire sur une machine cliente
 
 ## LDAP
 
@@ -67,6 +96,12 @@ Nous avons 2 scripts pour le NFS :
 
 ## Serveur de bases de données
 
+Le serveur de bases de données est un serveur qui permet de stocker des données dans des bases de données. Il est utilisé notamment dans le cadre d'un site web dynamique. Bien que nous n'en faisons pas utilisation, nous avons mis en place un script pour installer Postgres sur une machine de son choix.
+
+Il n'y a qu'un script pour le serveur de bases de données :
+
+- [`postgres_install.sh`](./scripts/postgres/server.md) : Installation à faire sur le serveur de bases de données
+
 ## Test
 
 Afin de pouvoir tester l'infrastructure, nous avons mis en place des scripts à executer permettant de tester l'ensemble des services de l'infrastructure.
@@ -77,3 +112,10 @@ A cet effet, nous avons mis en place 2 scripts :
 - [`test-services.sh`](./scripts/test/services.md) : Script de test pour la disponibilité des services de l'infrastructure
 
 ## Zabbix
+
+Zabbix est notre outil de surveillance du réseau. Il permet de surveiller l'état des machines, et de détecter les problèmes qui ont pu survenir.
+C'es un outil puissant qui permettra de rapidement visualiser l'état du réseau.
+
+Nous n'avons besoin que d'un script à executer sur le serveur Zabbix :
+
+- [`zabbix_install.sh`](./scripts/zabbix/server.md) : Installation à faire sur le serveur Zabbix

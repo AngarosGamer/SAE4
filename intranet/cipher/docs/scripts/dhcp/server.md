@@ -12,7 +12,7 @@ Retrouvez le script téléchargeable ici : [DHCP Server](https://raw.githubuserc
 
 ## Prérequis
 
-- Avoir une machine virtuelle Debian 11 installée (voir [Installation-machine](../installation-machine.md))
+- Avoir une machine virtuelle Debian 11 installée (voir [Installation-machine](../vm/create.md))
 - Avoir une connexion internet
 - Avoir un accès `root` au serveur
 

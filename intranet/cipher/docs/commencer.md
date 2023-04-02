@@ -8,7 +8,7 @@ L'installation de l'infrastructure de Cipher se fzit en plusieurs étapes, dans 
 
 ## Installation des machines virtuelles
 
-Pour commencer à mettre en place Cipher, il faut mettre en marche les différentes machines qui vont tourner dans l'infrastructure. Pour cela, il faut suivre la documentation [Installation-machine](./installation-machine.md).
+Pour commencer à mettre en place Cipher, il faut mettre en marche les différentes machines qui vont tourner dans l'infrastructure. Pour cela, il faut suivre la documentation [Installation-machine](./scripts/vm/create.md).
 
 ### Mise en place d'un client
 
