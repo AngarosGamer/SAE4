@@ -17,6 +17,13 @@ Il y a deux scripts pour le DHCP :
 - [`dhcp_install_client.sh`](./scripts/dhcp/client.md) : Installation à faire sur une machine cliente du DHCP (qui reçoit une adresse IP)
 
 ## DNS
+Le DNS permet principalement de résoudre les noms de domaine en adresses IP pour faciliter l'accès aux sites web, et aussi aux différentes machines et serveurs de l'infrastructure.
+Notre architecture comporte deux serveurs DNS, le premier pour la dmz, et le second pour le reste de l'infrastructure, c'est ce dernier qui va notamment être utilisé pour fournir les adresse IP correspondant aux noms de domaines demandés par les machines client.
+
+Il y a donc trois scripts pour le DNS :
+- [`dns_intranet_install_server.sh`](./scripts/dns/server_intranet.md) : Installation à faire sur le serveur DNS du réseau interne
+- [`dns_intranet_install_client.sh`](./scripts/dns/client.md) : Installation à faire sur une machine cliente
+- [`dns_dmz_install_server.sh`](./scripts/dns/server_dmz.md) : Installation à faire sur le serveur DNS de la DMZ
 
 ## Firewall
 
