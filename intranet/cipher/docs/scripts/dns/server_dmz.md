@@ -18,6 +18,14 @@ Retrouvez le script téléchargeable ici : [DNS DMZ Server](https://raw.githubus
 
 ## Installation
 
+Pour installer le LDAP coté client, il suffit de lancer le script `dns_dmz_install_server.sh` téléchargé au-dessus en tant que `root` :
+
+```bash
+utilisateur@machine:~# ./dns_dmz_install_server.sh
+```
+
+## Fonctionnement
+
 Le script va réécrire le fichier /etc/bind/named.conf pour inclure les fichiers d'options, local et de zone par défaut.
 Il va ensuite compléter le fichier local (/etc/bind/maned.conf.local) afin d'y insérer la zone de la DMZ
 Puis, le script va créer un fichier db pour la zone et y inclut les servers dns et web.

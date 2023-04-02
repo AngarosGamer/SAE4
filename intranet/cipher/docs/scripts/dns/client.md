@@ -18,6 +18,14 @@ Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubuserco
 
 ## Installation
 
+Pour installer le LDAP coté client, il suffit de lancer le script `dns_intranet_install_client.sh` téléchargé au-dessus en tant que `root` :
+
+```bash
+utilisateur@machine:~# ./dns_intranet_install_client.sh
+```
+
+## Fonctionnement
+
 Le script va tout d'abord editer le fichier /etc/network/interfaces afin de s'assurer de la gestion de l'interface "enp1s0" par le client.
 Le script va ensuite redemarrer le service networking
 Après quoi il va associer l'IP 192.168.1.6 au serveur DNS (voir [DNS Server](server_intranet.md))

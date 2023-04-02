@@ -8,7 +8,7 @@ Le serveur DNS permet de distribuer des adresses IP aux machines du réseau. Il 
 
 ## Téléchargement
 
-Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dns/dns_intranet/dns_intranet_install_client.sh)
+Retrouvez le script téléchargeable ici : [DNS Serveur](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dns/dns_intranet/dns_intranet_install_server.sh)
 
 ## Prérequis
 
@@ -17,6 +17,14 @@ Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubuserco
 - Avoir un accès `root` au serveur
 
 ## Installation
+
+Pour installer le LDAP coté client, il suffit de lancer le script `dns_intranet_install.sh` téléchargé au-dessus en tant que `root` :
+
+```bash
+utilisateur@machine:~# ./dns_intranet_install_client.sh
+```
+
+## Fonctionnement
 
 Le script va réécrire le fichier /etc/bind/named.conf pour inclure les fichiers d'options, local et de zone par défaut.
 Il va ensuite compléter le fichier local (/etc/bind/maned.conf.local) afin d'y insérer la zone pour les machines client et la zone des serveurs.
