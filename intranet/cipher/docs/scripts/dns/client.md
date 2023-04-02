@@ -18,7 +18,7 @@ Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubuserco
 
 ## Installation
 
-Pour installer le DHCP coté client, il suffit de lancer le script `dns_intranet_install_client.sh` téléchargé au-dessus en tant que `root` :
+Pour installer le DNS coté client, il suffit de lancer le script `dns_intranet_install_client.sh` téléchargé au-dessus en tant que `root` :
 
 ```bash
 utilisateur@machine:~# ./dns_intranet_install_client.sh
