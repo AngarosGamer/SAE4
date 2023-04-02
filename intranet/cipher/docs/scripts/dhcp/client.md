@@ -18,3 +18,4 @@ Retrouvez le script téléchargeable ici : [DHCP Client](https://raw.githubuserc
 
 ## Installation
 
+Le script va télécharger un fichier [dhcpd.conf](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf)
