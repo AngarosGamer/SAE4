@@ -67,3 +67,19 @@ Voir le script [LDAP Client](../ldap/client.md) pour plus d'informations.
 Pour faciliter l'utilisation de l'infrastructure, un serveur de fichiers est mis en place. Ce serveur permet de partager des fichiers entre les machines virtuelles à partir d'un serveur central. L'installation du client NFS permet aux machines virtuelles de se connecter à ce serveur de fichiers.
 
 Voir le script [NFS Client](../nfs/client.md) pour plus d'informations.
+
+- Installation du client DNS
+
+Le DNS permet de récupérer l'adresse IP d'un nom de domaine. L'installation du client DNS permet aux machines virtuelles de se connecter à ce service centralisé pour récupérer l'adresse IP d'un nom de domaine pour correctement navviguer sur internet, et permet d'attribuer aux machines un nom de domaine.
+
+```bash
+ex: dns.cipher.com
+```
+
+Voir le script [DNS Client](../dns/client.md) pour plus d'informations.
+
+- Installation du client DHCP
+
+Le client DHCP permet de récupérer une adresse IP dynamiquement de la part du serveur DHCP mis en place. L'installation du client DHCP permet aux machines virtuelles de se connecter à ce service centralisé pour récupérer une adresse IP dynamiquement.
+
+Voir le script [DHCP Client](../dhcp/client.md) pour plus d'informations.

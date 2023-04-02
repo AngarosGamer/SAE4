@@ -45,3 +45,5 @@ source ./dns_intranet_install_client.sh
 wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcp_install_client.sh
 chmod +x dhcp_install_client.sh
 source ./dhcp_install_client.sh
+
+reboot
