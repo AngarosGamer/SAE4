@@ -23,8 +23,3 @@ Pour installer le LDAP coté client, il suffit de lancer le script `dhcp_install
 ```bash
 utilisateur@machine:~# ./dhcp_install_client.sh
 ```
-
-## Installation
-
-le script va d'abord réécrire dans son intégralité le fihier /etc/network/interfaces pour qu'il remplace l'IP statique par une IP qu'il demandera au [DHCP Server](server.md)
-Et redemarre simplement le service networking

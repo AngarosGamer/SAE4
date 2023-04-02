@@ -23,11 +23,3 @@ Pour installer le LDAP coté client, il suffit de lancer le script `dns_intranet
 ```bash
 utilisateur@machine:~# ./dns_intranet_install_client.sh
 ```
-
-## Fonctionnement
-
-Le script va réécrire le fichier /etc/bind/named.conf pour inclure les fichiers d'options, local et de zone par défaut.
-Il va ensuite compléter le fichier local (/etc/bind/maned.conf.local) afin d'y insérer la zone pour les machines client et la zone des serveurs.
-Puis, le script va créer deux fichier db correspondant aux zones et inclut pour les deux son IP (192.168.1.6) puis pour la zone serveurs, les serveurs de cette zone (dhcp, zabbix, ...)
-Ensuite, il édite le fichier interfaces afin de fixer son adresse IP à 192.168.1.6 et édite le fichier /etc/default/named pour être en IPv4
-Enfin, il redémarre les services bind9 et networking.

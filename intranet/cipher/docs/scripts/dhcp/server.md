@@ -23,10 +23,3 @@ Pour installer le LDAP coté client, il suffit de lancer le script `dhcp_install
 ```bash
 utilisateur@machine:~# ./dhcp_install_server.sh
 ```
-
-## Fonctionnement
-
-Le script va d'abord modifier le fichier /etc/default/isc-dhcp-server pour ajouter l'interface enp1s0,
-Puis le script va télécharger un fichier [dhcpd.conf](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf),
-Il va ensuite modifier le fichier dhclient.conf pour qu'il prenne en compte le serveur dns
-Et enfin il redemarre le service isc-dhcp-server.service
