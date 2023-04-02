@@ -19,4 +19,4 @@ Retrouvez le script téléchargeable ici : [DHCP Client](https://raw.githubuserc
 ## Installation
 
 le script va d'abord réécrire dans son intégralité le fihier /etc/network/interfaces pour qu'il remplace l'IP statique par une IP qu'il demandera au [DHCP Server](server.md)
-Et redemarre simplement le service networking 
+Et redemarre simplement le service networking
