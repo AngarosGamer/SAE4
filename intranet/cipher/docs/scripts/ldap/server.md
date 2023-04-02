@@ -1,13 +1,21 @@
+---
+hide:
+  - navigation
+---
 # Configurer l'annuaire LDAP
 
 ## Prérequis
 
 - Avoir un accès root sur la machine physique (ou virtuelle) sur laquelle lancer l'installation
 
-## Téléchargement
+## Installer le serveur LDAP
+
+### Téléchargement
+
 Le script d'installation du LDAP coté client est disponible ici : [Installer LDAP server](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_server.sh)
 
-## Installation
+### Installation
+
 Pour installer le LDAP coté client, il suffit de lancer le script `ldap_install_server.sh` téléchargé au-dessus en tant que `root` :
 
 ```bash
@@ -25,18 +33,19 @@ Une fenetre de configuration s'ouvrira et vous devrez séléctionner les éléme
 
 Votre serveur est maintenant configurer, avec 3 branches : Machines, Personnes et serveurs
 
-## Test 
+### Test
 
 Vous pouvez afficher chaque entrées de votre annuaire avec la commande slapcat, à ce niveau, elle ne devrait afficher que 3 paragraphes : un pour machines, serveurs et personnes.
 Après avoir renseigné des utilisateurs avec le script ldap_add_user, vous verrez aparaitre des paragraphe supplémentaire correspondant à des comptes utilisateur sous le dn=Personnes.
 
+## Ajouter des utilisateurs
 
-# Ajouter des utilisateurs
+### Téléchargement de ce script
 
-## Téléchargement 
 Le script d'ajout d'utilisateur est disponible ici : [Ajouter utilisateur](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_add_user.sh)
 
-# Installation
+### Utilisation
+
 Pour ajouter un utilisateur, il suffit de lancer le script `ldap_add_user.sh` téléchargé au-dessus en tant que `root` :
 Vous devez renseigner le nom du nouvel utilisateur, ainsi que l'uid et le gid que vous voulez lui attribuer :
 

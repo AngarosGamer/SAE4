@@ -18,8 +18,6 @@ Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubuserco
 
 ## Installation
 
-## Installation
-
 Le script va réécrire le fichier /etc/bind/named.conf pour inclure les fichiers d'options, local et de zone par défaut.
 Il va ensuite compléter le fichier local (/etc/bind/maned.conf.local) afin d'y insérer la zone pour les machines client et la zone des serveurs.
 Puis, le script va créer deux fichier db correspondant aux zones et inclut pour les deux son IP (192.168.1.6) puis pour la zone serveurs, les serveurs de cette zone (dhcp, zabbix, ...)

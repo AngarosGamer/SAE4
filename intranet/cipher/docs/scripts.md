@@ -21,6 +21,7 @@ Le DNS permet principalement de résoudre les noms de domaine en adresses IP pou
 Notre architecture comporte deux serveurs DNS, le premier pour la dmz, et le second pour le reste de l'infrastructure, c'est ce dernier qui va notamment être utilisé pour fournir les adresse IP correspondant aux noms de domaines demandés par les machines client.
 
 Il y a donc trois scripts pour le DNS :
+
 - [`dns_intranet_install_server.sh`](./scripts/dns/server_intranet.md) : Installation à faire sur le serveur DNS du réseau interne
 - [`dns_intranet_install_client.sh`](./scripts/dns/client.md) : Installation à faire sur une machine cliente
 - [`dns_dmz_install_server.sh`](./scripts/dns/server_dmz.md) : Installation à faire sur le serveur DNS de la DMZ
@@ -44,6 +45,13 @@ Il existe plusieurs scripts pour la mise en place de machines virtuelles :
 ## Kerberos
 
 ## LDAP
+
+Le LDAP est un annuaire de données, qui permet de stocker des informations sur les utilisateurs, les groupes, les machines, etc. Il est utilisé pour l'authentification des utilisateurs, et pour la gestion des groupes d'utilisateurs.
+
+Nous avons 2 scripts pour le LDAP :
+
+- [`ldap_install_server.sh`](./scripts/ldap/server.md) : Installation à faire sur le serveur LDAP
+- [`ldap_install_client.sh`](./scripts/ldap/client.md) : Installation à faire sur une machine cliente
 
 ## NFS (Serveur de fichiers)
 

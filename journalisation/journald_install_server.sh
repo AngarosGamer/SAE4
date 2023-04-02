@@ -56,10 +56,4 @@ systemctl restart systemd-journald
 systemctl enable --now systemd-journal-remote.socket
 systemctl enable systemd-journal-remote.service
 
-# Ouverture des ports 19532 et 80 sur le pare-feu
-
-
-
-
-
 reboot
