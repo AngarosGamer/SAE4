@@ -30,20 +30,21 @@ systemctl status mariadb
 mysql_secure_installation
 
 # Creer la base de données
-#read -srp 'Mot de passe pour la base de données [défaut: rootDBpass]:' dbPassword
-#echo "$dbPassword"
+read -srp 'Mot de passe pour la base de données [défaut: rootDBpass]:' dbPassword
 
 #mysql -uroot -p"$dbPassword" -e "create database zabbix character set utf8mb4 collate utf8mb4_bin;"
 #mysql -uroot -p"$dbPassword" -e "grant all privileges on zabbix.* to zabbix@localhost identified by ${dbPassword};"
 
+read -rp "Remplissez les conditions d'installation définies dans la documentation avant de continuer ! (Appuyez sur une touche pour continuer)" 
+
 # Importer les tables et valeurs par défaut dans la base de données
-#echo "Attention! La commande suivante peut prendre du temps (5 minutes). Ne quittez pas l'installation!"
-#zcat  /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -u zabbix -p"$dbPassword" zabbix
+echo "Attention! La commande suivante peut prendre du temps (5 minutes). Ne quittez pas l'installation!"
+zcat  /usr/share/zabbix-sql-scripts/mysql/server.sql.gz | mysql --default-character-set=utf8mb4 -u zabbix -p"$dbPassword" zabbix
 
 # Entrer dans la base de données et modifier les valeurs de mot de passe
-#"DBPassword=$dbPassword" >> /etc/zabbix/zabbix_server.conf
-read -srp 'feur: ' pass
-echo "$pass"
+"DBPassword=$dbPassword" >> /etc/zabbix/zabbix_server.conf
+
+
 # Lancer le serveur Zabbix et son processus agent - Vérifier son état
 systemctl restart zabbix-server zabbix-agent
 systemctl enable zabbix-server zabbix-agent

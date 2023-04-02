@@ -1,0 +1,19 @@
+site_name: Cipher - Documentation
+site_url: http://192.168.0.3
+nav:
+  - Accueil: index.md
+  - Commencer: commencer.md
+  - Scripts: scripts.md
+
+repo_url: https://github.com/AngarosGamer/SAE4
+
+theme:
+  name: material
+  language: fr
+  features:
+   - navigation.tabs
+   - navigation.top
+   - navigation.instant
+  palette:
+    scheme: slate
+    primary: light green
