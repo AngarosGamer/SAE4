@@ -17,6 +17,7 @@ Il y a deux scripts pour le DHCP :
 - [`dhcp_install_client.sh`](./scripts/dhcp/client.md) : Installation à faire sur une machine cliente du DHCP (qui reçoit une adresse IP)
 
 ## DNS
+
 Le DNS permet principalement de résoudre les noms de domaine en adresses IP pour faciliter l'accès aux sites web, et aussi aux différentes machines et serveurs de l'infrastructure.
 Notre architecture comporte deux serveurs DNS, le premier pour la dmz, et le second pour le reste de l'infrastructure, c'est ce dernier qui va notamment être utilisé pour fournir les adresse IP correspondant aux noms de domaines demandés par les machines client.
 
@@ -55,8 +56,24 @@ Nous avons 2 scripts pour le LDAP :
 
 ## NFS (Serveur de fichiers)
 
+Le service NFS permet de partager des fichiers et des dossiers entre plusieurs machines. Il est utilisé pour partager des fichiers entre les machines virtuelles et le serveur NFS qui contient ces fichiers.
+
+C'est un outil utile pour pouvoir changer de poste de travail et continuer à travailler sur les mêmes fichiers.
+
+Nous avons 2 scripts pour le NFS :
+
+- [`nfs_install_server.sh`](./scripts/nfs/server.md) : Installation à faire sur le serveur NFS
+- [`nfs_install_client.sh`](./scripts/nfs/client.md) : Installation à faire sur une machine cliente
+
 ## Serveur de bases de données
 
 ## Test
+
+Afin de pouvoir tester l'infrastructure, nous avons mis en place des scripts à executer permettant de tester l'ensemble des services de l'infrastructure.
+
+A cet effet, nous avons mis en place 2 scripts :
+
+- [`test-connectivite.sh`](./scripts/test/connectivite.md) : Script de test pour la disponibilité des machines de l'infrastructure
+- [`test-services.sh`](./scripts/test/services.md) : Script de test pour la disponibilité des services de l'infrastructure
 
 ## Zabbix
