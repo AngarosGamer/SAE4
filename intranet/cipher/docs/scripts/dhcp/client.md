@@ -18,8 +18,10 @@ Retrouvez le script téléchargeable ici : [DHCP Client](https://raw.githubuserc
 
 ## Installation
 
-Pour installer le LDAP coté client, il suffit de lancer le script `dhcp_install_client.sh` téléchargé au-dessus en tant que `root` :
+Pour installer le DHCP coté client, il suffit de lancer le script `dhcp_install_client.sh` téléchargé au-dessus en tant que `root` :
 
 ```bash
 utilisateur@machine:~# ./dhcp_install_client.sh
 ```
+
+Votre machine est maintenant configurée
