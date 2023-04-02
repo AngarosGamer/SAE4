@@ -2,9 +2,9 @@
 
 if [ "$#" -ne 1 ];
 then
-  echo "Il faut renseigner l'addresse CIDR de la machine cliente"
+  echo "Il faut renseigner l'addresse ip de la machine cliente"
 	echo "Exemple de commande :"
-	echo "./nfs_add_client 192.168.2.4/24"
+	echo "./nfs_add_client 192.168.2.4"
 fi
 # Vérifier si l'utilisateur est root
 if [ "$EUID" -ne 0 ]
