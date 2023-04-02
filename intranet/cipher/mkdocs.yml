@@ -4,6 +4,7 @@ nav:
   - Accueil: index.md
   - Commencer: commencer.md
   - Scripts: scripts.md
+  - Troubleshoot: troubleshooting.md
 
 repo_url: https://github.com/AngarosGamer/SAE4
 
@@ -17,3 +18,4 @@ theme:
   palette:
     scheme: slate
     primary: light green
+    accent: green

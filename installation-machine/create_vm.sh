@@ -9,10 +9,11 @@ else
 	--name="$1"																	\
 	--vcpus="$2"  																\
 	--memory="$3" 																\
-	--cdrom=/machines/auto-install/preseed-debian-11.6.0-amd64-netinst.iso		\
+	--location=/machines/auto-install/preseed-debian-11.6.0-amd64-netinst.iso	\
 	--disk size="$4"															\
-	--os-variant=debiantesting													\
 	--os-type=linux																\
 	--network=default															\
-	--accelerate
+	--accelerate																\
+	--os-variant=debiantesting													\
+	--extra-args='console=tty1'
 fi

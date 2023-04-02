@@ -20,7 +20,15 @@ Il y a deux scripts pour le DHCP :
 
 ## Firewall
 
-## Installation-machine
+## Machines Virtuelles
+
+L'architecture cipher se base sur des machines virtuelles, qui sont des machines virtuelles qui tourneront sur un serveur physique. A cet effet, il est nécessaire de mettre en place un script d'installation de machines virtuelles.
+
+Il existe plusieurs scripts pour la mise en place de machines virtuelles :
+
+- [`create_vm.sh`](./scripts/vm/create.md) : Création d'une machine virtuelle
+- [`post-install.sh`](./scripts/vm/post-install.md) : Installation automatique de la machine virtuelle après sa création
+- [`make-preseed-iso.sh`](./scripts/vm/preseed-iso.md) : Avancé - Création d'un fichier ISO contenant un fichier de configuration pour l'installation automatique d'une machine virtuelle
 
 ## Intranet
 
@@ -35,7 +43,5 @@ Il y a deux scripts pour le DHCP :
 ## Serveur de bases de données
 
 ## Test
-
-## Machines Virtuelles
 
 ## Zabbix
