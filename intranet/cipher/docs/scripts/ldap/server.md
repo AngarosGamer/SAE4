@@ -5,7 +5,7 @@
 - Avoir un accès root sur la machine physique (ou virtuelle) sur laquelle lancer l'installation
 
 ## Téléchargement
-Le script d'installation du LDAP coté client est disponible ici : [Installer LDAP server](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_server.sh)
+Le script d'installation du LDAP coté serveur est disponible ici : [Installer LDAP server](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_server.sh)
 
 ## Installation
 Pour installer le LDAP coté client, il suffit de lancer le script `ldap_install_server.sh` téléchargé au-dessus en tant que `root` :
