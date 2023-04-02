@@ -25,3 +25,13 @@ sed -i 's/ServerActive=127.0.0.1/ServerActive=192.168.1.10/g' /etc/zabbix/zabbix
 
 systemctl enable zabbix-agent
 systemctl restart zabbix-agent
+
+## Install ldap client
+wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/ldap/ldap_install_client.sh
+chmod +x ldap_install_client.sh
+source ./ldap_install_client.sh
+
+## Install nfs client
+wget https://raw.githubusercontent.com/AngarosGamer/SAE4/main/nfs/nfs_install_client.sh
+chmod +x nfs_install_client.sh
+source ./nfs_install_client.sh
