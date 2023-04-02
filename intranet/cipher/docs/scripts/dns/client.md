@@ -8,7 +8,7 @@ Le script d'installation du client DNS permet de configurer une machine pour qu'
 
 ## Téléchargement
 
-Retrouvez le script téléchargeable ici : [DNS Server](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dns/dns_intranet/dns_intranet_install_client.sh)
+Retrouvez le script téléchargeable ici : [DNS Client](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dns/dns_intranet/dns_intranet_install_client.sh)
 
 ## Prérequis
 
@@ -17,3 +17,7 @@ Retrouvez le script téléchargeable ici : [DNS Server](https://raw.githubuserco
 - Avoir un accès `root` au serveur
 
 ## Installation
+
+Le script va tout d'abord editer le fichier /etc/network/interfaces afin de s'assurer de la gestion de l'interface "enp1s0" par le client.
+Le script va ensuite redemarrer le service networking
+Après quoi il va associer l'IP 192.168.1.6 au serveur DNS (voir [DNS Server](server_intranet.md))
