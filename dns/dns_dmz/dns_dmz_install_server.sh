@@ -13,49 +13,47 @@
 #installe les packages bind9
     apt -y install bind9 || error "L'installation a échoué."
 
-fileNamedConf="/users/info/etu-2a/boussitt/SAE4/test.txt"
-fileNamedConfLocal="/users/info/etu-2a/boussitt/SAE4/a.conf.local"
-
-#NAME.CONF
-
-#creer la zone de l'intranet
-
-    sed -i '$a\zone "dmz.cipher." {\ntype master;\nfile "/etc/bind/db.dmz.cipher";\n};' "$fileNamedConf"
-
-#vérifier si la ligne "include named.conf.local" est présente
-    if grep "include "$fileNamedConfLocal";" $fileNamedConf; then
-        echo "is(are) present"
-    else
-        echo "include named.conf.local is added to the fileNamedConf"
-        #ajouter à la fin du fichier le include "etc/bind/named.conf.local"
-        sed -i "$a\include "$fileNamedConfLocal";" $fileNamedConf
-        echo "added"
+#verifie si bind9 est installé
+    if ! which bind9 > /dev/null; then
+    echo -e "bind9 packages not installed, please advise your system administrator".
     fi
+ 
+#réécrire le fichier /etc/bind/named.conf de sorte qu'il ait les bons includes
+    cat > /etc/bind/named.conf << 'EOL'
+include "/etc/bind/named.conf.options"
+include "/etc/bind/named.conf.local"
+include "/etc/bind/named.conf.defaulte-zones"
+EOL
 
-#NAMED.CONF.LOCAL
+#completer le fichier named.conf.local
+    cat > /etc/bind/named.conf.local << 'EOL'
+zone "dmz.cipher" {
+    type master;
+    file "/etc/bind/db.dmz.cipher";
+};
+EOL
+echo "named.conf.local complété"
 
-#overwriting de named.conf.local
-    #rm $fileNamedConfLocal
-    #cp dmzNamed.conf.local $fileNamedConfLocal
 
 #creer un fichier de zone pour la dmz
     touch /etc/bind/db.dmz.cipher.
 
 #ajouter les enregistrements dans le fichier de zone
     cat > /etc/bind/db.dmz.cipher. << 'EOL'
-$TTL 86400
+$TTL 604800
 @       IN      SOA     dmz.cipher.com. root.dmz.cipher. (
-                        2020102001      ; Serial
-                        3600            ; Refresh
-                        1800            ; Retry
-                        604800          ; Expire
-                        86400 )         ; Minimum TTL
+                        1               ; Serial
+                        604800          ; Refresh
+                        86400           ; Retry
+                        2419200         ; Expire
+                        604800 )        ; Minimum TTL
 ;
 @       IN      NS      dmz.cipher.
+@       IN      A       192.168.0.4
 dns       IN      A       192.168.0.4
 web       IN      A       192.168.0.3
 EOL
-
+echo "Fichier db.dmz.cipher. créé"
 #ajouter les directives au fichier interfaces
     cat > /etc/network/interfaces << 'EOL'
 iface enp1s0 inet static
@@ -63,7 +61,11 @@ address 192.168.0.4
 netmask 255.255.255.0
 dns-nameservers 192.168.0.4
 EOL
+echo "Fichier interfaces modifié"
 
+#modifier le fichier named pour etre en ipv4
+    sed -i 's/OPTIONS="-u bind"/OPTIONS="-u bind -4"/g' /etc/default/named
+    
 #redemarrer les services 
     systemctl restart bind9
     systemctl restart networking
