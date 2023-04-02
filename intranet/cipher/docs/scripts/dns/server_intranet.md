@@ -18,8 +18,10 @@ Retrouvez le script téléchargeable ici : [DNS Serveur](https://raw.githubuserc
 
 ## Installation
 
-Pour installer le LDAP coté client, il suffit de lancer le script `dns_intranet_install.sh` téléchargé au-dessus en tant que `root` :
+Pour installer le serveur DNS de l'intranet, il suffit de lancer le script `dns_intranet_install.sh` téléchargé au-dessus en tant que `root` :
 
 ```bash
 utilisateur@machine:~# ./dns_intranet_install_client.sh
 ```
+
+Votre serveur est maintenant configurée

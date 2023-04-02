@@ -18,8 +18,10 @@ Retrouvez le script téléchargeable ici : [DNS DMZ Server](https://raw.githubus
 
 ## Installation
 
-Pour installer le LDAP coté client, il suffit de lancer le script `dns_dmz_install_server.sh` téléchargé au-dessus en tant que `root` :
+Pour installer le serveur DNS de la DMZ, il suffit de lancer le script `dns_dmz_install_server.sh` téléchargé au-dessus en tant que `root` :
 
 ```bash
 utilisateur@machine:~# ./dns_dmz_install_server.sh
 ```
+
+Votre serveur est maintenant configurée
