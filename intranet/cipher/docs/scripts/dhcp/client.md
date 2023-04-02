@@ -18,4 +18,5 @@ Retrouvez le script téléchargeable ici : [DHCP Client](https://raw.githubuserc
 
 ## Installation
 
-Le script va télécharger un fichier [dhcpd.conf](https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcpd.conf)
+le script va d'abord réécrire dans son intégralité le fihier /etc/network/interfaces pour qu'il remplace l'IP statique par une IP qu'il demandera au [DHCP Server](server.md)
+Et redemarre simplement le service networking 
