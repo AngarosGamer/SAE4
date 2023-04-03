@@ -8,8 +8,8 @@
 
 
 # Ping depuis le routeur sur d'autres machines
-add rule filter output icmp type echo-request limit rate 50/second ip daddr 192.168.0.0/22 accept # Autoriser jusqu'à 50 requêtes ICMP par seconde vers le réseau interne de l'infrastructure
-add rule filter output icmp type echo-request limit rate over 50/second ip daddr 192.168.0.0/22 drop # Ne pas autoriser plus de 50 requêtes ICMP par seconde vers le réseau interne de l'infrastructure
+nft add rule filter output icmp type echo-request limit rate 50/second ip daddr 192.168.0.0/22 accept # Autoriser jusqu'à 50 requêtes ICMP par seconde vers le réseau interne de l'infrastructure
+nft add rule filter output icmp type echo-request limit rate over 50/second ip daddr 192.168.0.0/22 drop # Ne pas autoriser plus de 50 requêtes ICMP par seconde vers le réseau interne de l'infrastructure
 
 # Politique par défaut : ACCEPT (blacklist)
-add rule filter output accept # On accepte toutes les connexions sortantes par défaut
+nft add rule filter output accept # On accepte toutes les connexions sortantes par défaut

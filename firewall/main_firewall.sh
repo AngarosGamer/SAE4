@@ -20,8 +20,7 @@ fi
 if [[ -f /usr/sbin/nft ]]; then
     echo "nft est déjà installé, passage à l'étape suivante"
 else
-    apt install nftables  || error "L'installation de nftables a échoué. Il est nécessaire de l'installer pour que le firewall fonctionne."
-    exit 1
+    apt install nftables -y  || error "L'installation de nftables a échoué. Il est nécessaire de l'installer pour que le firewall fonctionne."
 fi
 
 # Lancer nftables et le paramétrer pour se lancer quand la machine boot + status
@@ -37,16 +36,7 @@ fi
 if [[ -f /usr/sbin/conntrack ]]; then
     echo "conntrack est déjà installé, passage à l'étape suivante"
 else
-    apt install conntrack || error "L'installation de conntrack a échoué. Il est nécessaire de l'installer pour que le firewall statefull fonctionne."
-    exit 1
-fi
-
-# Installer le JDK de Java si non installé
-if [[ -f /usr/bin/java ]]; then
-    echo "Java est déjà installé, passage à l'étape suivante"
-else
-    apt install default-jdk || error "L'installation de Java a échoué. Il est nécessaire de l'installer pour que le firewall fonctionne."
-    exit 1
+    apt install conntrack -y || error "L'installation de conntrack a échoué. Il est nécessaire de l'installer pour que le firewall statefull fonctionne."
 fi
 
 # Réinitialiser le firewall (vérification de l'existence du fichier)

@@ -15,8 +15,6 @@ for address in $host; do
     fi
 done
 
-printf "\nTest du serveur DHCP :"
-
 dhcp_server="192.168.1.8" # Addresse serveur
 
 echo "Test du serveur DHCP sur $dhcp_server..."
