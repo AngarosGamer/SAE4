@@ -14,6 +14,3 @@ fi
 
 # Mise en place du service NFS pour les homedirs de la machine d'addresse passée en parametre
 "/home $1(rw,async,no_subtree_check)" >> /etc/exports
-
-# Relancer le serveur NFS
-systemctl restart nfs-kernel-server
