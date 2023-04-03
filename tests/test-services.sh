@@ -17,14 +17,31 @@ done
 
 printf "\nTest du serveur DHCP :"
 
-mac="$(cat /sys/class/net/enp8s0/address)"
-ip=$(hostname -I)
+dhcp_server="192.168.1.8" # Addresse serveur
 
-if [ "$(dhcping -c 192.168.1.2 -s 192.168.1.8 -h "$mac")" ]; then
-    echo "Réponse de 192.168.1.8 - service DHCP semble en marche"
+echo "Test du serveur DHCP sur $dhcp_server..."
+
+# nslookup pour vérifier que le serveur DHCP existe
+if ! nslookup -type=srv _dhcp._udp.$dhcp_server >/dev/null 2>&1; then
+  echo "Serveur DHCP non trouvé!"
+  exit 1
 else
-    echo "Pas de réponse de 192.168.1.8 - service DHCP semble en panne"
+  echo "Serveur DHCP trouvé, envoi d'un DHCP Request de test"
 fi
+
+# Envoi de 3 DHCP Request pour tester
+for i in {1..3}; do
+  echo ""
+  echo "Envoi tu test DHCP n°$i..."
+  result=$(echo -e '\x01\x01\x06\x00\x15\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20' | socat - UDP4-DATAGRAM:$dhcp_server:67,so-broadcast)
+  if [[ "$result" == *"DHCPOFFER"* ]]; then
+    echo "Réponse correcte du serveur DHCP"
+    exit 0
+  fi
+done
+
+echo "Le serveur DHCP n'a pas répondu"
+
 
 echo "Test d'accès à un compte du LDAP sur la machine poste-4"
 
