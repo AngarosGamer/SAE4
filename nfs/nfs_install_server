@@ -18,4 +18,4 @@ systemctl restart nfs-kernel-server
 systemctl enable --now nfs-server.service
 
 # Vérifier les exports NFS
-exportfs 
+exportfs -rav

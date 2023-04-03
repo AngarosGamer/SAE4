@@ -10,7 +10,8 @@ fi
 apt -y install nfs-common
 
 # Monter le homedir dans le serveur NFS
-mount 192.168.128.1:/home /home
-ls /home
+cat > /etc/fstab << 'EOL'
+192.168.1.5:/home   /home   nfs  noauto,x-systemd.automount   0  0
 
-"192.168.128.4:/home   /home   nfs  noauto,x-systemd.automount   0  0" >> /etc/fstab
+EOL
+mount 192.168.1.5:/home /home
