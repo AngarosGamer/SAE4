@@ -5,13 +5,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-#ajouter le nom du serveur DNS dans /hostsname
-cat > /etc/network/interfaces << 'EOF'
-# This file contain the FQDN of the DNS server
-dns.cipher.
-
-EOF
-
+#modifie la ligne iface pour ajouter dhcp
 interfacesFile="/etc/network/interfaces"
     if grep 'auto enp1s0' "$interfacesFile"; then
         if ! grep 'iface enp1s0 inet dhcp' "$interfacesFile"; then
@@ -36,7 +30,7 @@ systemctl restart networking.service
 
 
 #associer l'adresse IPv4 dans le fichier hosts
-text="192.168.1.6     dns.cipher."
+text="192.168.1.6     dns.cipher.com"
 #text2="192.168.0.128    dns.cipher.intra"
 
 sed -i "2i $text" /etc/hosts

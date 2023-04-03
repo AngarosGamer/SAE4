@@ -1,0 +1,606 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="http://192.168.0.3/scripts/vm/create/">
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.4.2, mkdocs-material-9.1.5">
+    
+    
+      
+        <title>Créer une nouvelle machine virtuelle - Cipher - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.7a7fce14.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.a0c5b2b5.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="light-green" data-md-color-accent="green">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#creer-une-nouvelle-machine-virtuelle" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../../.." title="Cipher - Documentation" class="md-header__button md-logo" aria-label="Cipher - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Cipher - Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Créer une nouvelle machine virtuelle
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/AngarosGamer/SAE4" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../.." class="md-tabs__link">
+      Accueil
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../commencer/" class="md-tabs__link">
+      Commencer
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../" class="md-tabs__link">
+      Scripts
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../troubleshooting/" class="md-tabs__link">
+      Troubleshoot
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Cipher - Documentation" class="md-nav__button md-logo" aria-label="Cipher - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Cipher - Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/AngarosGamer/SAE4" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Accueil
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../commencer/" class="md-nav__link">
+        Commencer
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Scripts
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../troubleshooting/" class="md-nav__link">
+        Troubleshoot
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequis" class="md-nav__link">
+    Prérequis
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#telechargement" class="md-nav__link">
+    Téléchargement
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    Installation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sur-un-client" class="md-nav__link">
+    Sur un client
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sur-un-serveur" class="md-nav__link">
+    Sur un serveur
+  </a>
+  
+    <nav class="md-nav" aria-label="Sur un serveur">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#changement-du-nom-de-la-machine" class="md-nav__link">
+    Changement du nom de la machine
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changement-du-mot-de-passe-de-lutilisateur-root" class="md-nav__link">
+    Changement du mot de passe de l'utilisateur root
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ajout-dun-compte-utilisateur" class="md-nav__link">
+    Ajout d'un compte utilisateur
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#suppression-du-compte-par-defaut" class="md-nav__link">
+    Suppression du compte par défaut
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration-du-reseau" class="md-nav__link">
+    Configuration du réseau
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#changement-de-carte-reseau" class="md-nav__link">
+    Changement de carte réseau
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finalisation" class="md-nav__link">
+    Finalisation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="creer-une-nouvelle-machine-virtuelle">Créer une nouvelle machine virtuelle</h1>
+<p>L'infrastructure de Cipher se base sur une architecture de machines virtuelles imbriquées, faisant utilisation de KVM comme support de virtualisation.</p>
+<h2 id="prerequis">Prérequis</h2>
+<ul>
+<li>Avoir une machine physique (ou virtuelle) sur laquelle lancer l'installation</li>
+<li>Avoir configuré les réseaux voulus en avance</li>
+<li>Avoir une connexion internet et s'assurer que le NAT est bien configuré</li>
+</ul>
+<h2 id="telechargement">Téléchargement</h2>
+<p>Le script d'installation de la machine virtuelle est disponible ici : <a href="https://raw.githubusercontent.com/AngarosGamer/SAE4/main/installation-machine/create_vm.sh">Créer Machine Virtuelle</a></p>
+<h2 id="installation">Installation</h2>
+<p>Pour installer une nouvelle machine virtuelle, il suffit de lancer le script <code>create_vm.sh</code> téléchargé au-dessus en tant que <code>root</code> :</p>
+<pre><code class="language-bash">utilisateur@machine:~# ./create_vm.sh &lt;nom de la machine&gt; &lt;nombre de coeurs de CPU à allouer&gt; &lt;taille de la RAM à utiliser (en MBytes)&gt; &lt;taille du stockage (en Go)&gt;
+</code></pre>
+<p>Afin de faire tourner ce script, il sera possiblement nécessaire de lui donner les droits d'exécution :</p>
+<pre><code class="language-bash">utilisateur@machine:~# chmod +x create_vm.sh
+</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>La machine virtuelle créée est une Debian 11, mais emploie des paramètres de configuration par défaut. Il est donc nécessaire de la configurer pour qu'elle soit utilisable et sécurisée.</p>
+<p>Pour se connecter pour la première fois à la machine virtuelle, il faut lancer la console graphique.
+Puis, se connecter avec les identifiants suivants :</p>
+<ul>
+<li>Utilisateur : <code>root</code></li>
+<li>Mot de passe : <code>root</code></li>
+</ul>
+<h3 id="sur-un-client">Sur un client</h3>
+<p>Si votre machine est une machine cliente, les étapes suivantes sont déjà inclues dans un script de post-installation, qui se charge de faire toute la configuration automatiquement; il suffit de lancer le script <a href="https://raw.githubusercontent.com/AngarosGamer/SAE4/main/installation-machine/post-install.sh"><code>post_install.sh</code></a> en tant que <code>root</code> :</p>
+<pre><code class="language-bash">root@unassigned:~# chmod +x post_install.sh
+root@unassigned:~# ./post_install.sh
+</code></pre>
+<h3 id="sur-un-serveur">Sur un serveur</h3>
+<h4 id="changement-du-nom-de-la-machine">Changement du nom de la machine</h4>
+<p>Le nom par défaut de la machine sera "unassigned". Il est donc possible de le changer en utilisant la commande suivante :</p>
+<pre><code class="language-bash">root@unassigned:~# hostnamectl set-hostname &lt;nom de la machine&gt;
+</code></pre>
+<h4 id="changement-du-mot-de-passe-de-lutilisateur-root">Changement du mot de passe de l'utilisateur <code>root</code></h4>
+<p>Le mot de passe root par défaut est très peu sécurisé. Il est nécessaire de le changer pour garantir un niveau de sécurité suffisant.
+Nous recommandons un mot de passe d'au moins 12 caractères, contenant des chiffres, des lettres majuscules et minuscules, ainsi que des caractères spéciaux.</p>
+<pre><code class="language-bash">root@machine:~# passwd
+</code></pre>
+<h4 id="ajout-dun-compte-utilisateur">Ajout d'un compte utilisateur</h4>
+<p>Le compte root n'est à utiliser que pour des opérations d'administration. Il est donc nécessaire de créer un compte utilisateur pour pouvoir se connecter à la machine virtuelle et effectuer des actions de base qui ne nécessitent pas de privilèges particuliers.</p>
+<pre><code class="language-bash">root@machine:~# adduser &lt;nom de l'utilisateur&gt;
+</code></pre>
+<p>Il vous sera demander plusieurs informations, dont le mot de passe de cet utilisateur, son nom complet, son numéro de téléphone, etc.</p>
+<h4 id="suppression-du-compte-par-defaut">Suppression du compte par défaut</h4>
+<p>Lors de l'installation, un compte par défaut est créé. Il est possible de le supprimer, son rôle étant uniquement lié à l'installation de la machine.</p>
+<pre><code class="language-bash">userdel -r setupaccount
+</code></pre>
+<h3 id="configuration-du-reseau">Configuration du réseau</h3>
+<p>La machine virtuelle créée est configurée pour utiliser le réseau <code>default</code> par défaut. Il est possible de la configurer pour utiliser un autre réseau en modifiant le fichier <code>/etc/network/interfaces</code> en tant que <code>root</code>:</p>
+<pre><code class="language-bash">root@machine:~# nano /etc/network/interfaces
+</code></pre>
+<p>Sur un serveur, il y a deux méthodes pour modifier son adresse IP :</p>
+<ul>
+<li>Utiliser le DHCP pour le serveur (sauf si c'est le serveur DHCP), qui lui attribuera une IP statique</li>
+</ul>
+<p>Dans ce cas, utiliser le script <a href="https://raw.githubusercontent.com/AngarosGamer/SAE4/main/dhcp/dhcp_install_client.sh"><code>dhcp_install_client.sh</code></a> pour configurer la machine pour qu'elle utilise le serveur DHCP.</p>
+<ul>
+<li>Utiliser une IP statique directement, auquel cas il faut modifier le fichier directement</li>
+</ul>
+<p>Pour continuer, il faudra connaître le nom de l'interface réseau à modifier. Pour cela, il faut utiliser la commande <code>ip a</code> pour lister les interfaces réseau disponibles :</p>
+<pre><code class="language-bash">root@machine:~# ip a
+</code></pre>
+<p>Avec le nom de l'interface, il est possible de modifier le fichier <code>/etc/network/interfaces</code> pour configurer l'interface réseau :</p>
+<pre><code class="language-bash">allow-hotplug &lt;nom de l'interface&gt;
+iface &lt;nom de l'interface&gt; inet static
+    address &lt;adresse IP&gt;
+    netmask &lt;masque de sous-réseau&gt;
+    gateway &lt;adresse IP de la passerelle&gt;
+</code></pre>
+<h2 id="changement-de-carte-reseau">Changement de carte réseau</h2>
+<p>Comme nous travaillons dans une machine virtuelle, il faut changer la carte réseau pour ne plus utiliser le réseau virtuel <code>default</code>, mais le réseau voulu (DMZ, Serveurs, Machines, etc.).</p>
+<p>Dans la console virt-manager, cliquer sur l'icône ampoule en haut à gauche, et trouver la carte réseau à modifier (NIC :xx:xx:xx). Cliquer dessus, et changer le "Network Source" à celui voulu.</p>
+<p>Appliquer ces changements en cliquant sur "Apply".</p>
+<p>Dernièrement, il faut redémarrer la machine virtuelle pour que les changements soient pris en compte.</p>
+<h2 id="finalisation">Finalisation</h2>
+<p>Après le reboot de la machine virtuelle, la nouvelle configuration devrait être prise en compte. Pour le vérifier, soit connectez vous avec le nouveau compte utilisateur, soit connectez vous en tant que <code>root</code> et vérifiez que le nom de la machine est bien celui voulu.</p>
+<p>Il faut aussi que la machine ait une connexion internet qui marche. Pour cela il est possible de pinguer un serveur DNS (google par exemple) :</p>
+<pre><code class="language-bash">utilisateur@nom_machine:~# ping google.fr
+</code></pre>
+<p>Si tout est bon, le ping devrait marcher, sinon se référer à la section "Troubleshooting".</p>
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Retour en haut de la page
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.instant"], "search": "../../../assets/javascripts/workers/search.208ed371.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.407015b8.min.js"></script>
+      
+    
+  </body>
+</html>
